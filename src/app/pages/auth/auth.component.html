@@ -1,0 +1,131 @@
+<div class="flex justify-center h-screen items-center overflow-hidden">
+    <div class="container">
+        <div class="cover" [ngClass]="{ 'rotate-active':isRegister }">
+            <div class="front">
+                <img src="https://d.newsweek.com/en/full/2265611/young-adult-woman-library.jpg?w=1600&h=1600&q=88&f=077873a5de6b06625700e564685fcfde" alt="">
+                
+            </div>
+            <div class="back">
+                <img src="https://images.theconversation.com/files/361577/original/file-20201005-18-lmf7w7.jpg?ixlib=rb-1.1.0&rect=142%2C16%2C5464%2C3715&q=45&auto=format&w=926&fit=clip" alt="">
+            
+            </div>
+        </div>
+        <div class="form h-full">
+            <div class="form-content h-full">
+                <div class="signup-form">
+                    <h1 class="text-lg font-bold text-center pb-8">Signup</h1>
+                    <form [formGroup]="registrationForm" (ngSubmit)="handleRegister()" class="">
+                        <div class="mb-4">
+                            <mat-form-field class="w-full">
+                                <mat-label class="text-gray-400">Nickname</mat-label>
+                                <input 
+                                    required
+                                    matInput
+                                    formControlName="nickname"
+                                    class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+                                />
+                                <mat-error *ngIf="registrationForm.controls.nickname.touched && registrationForm.controls.nickname.invalid">
+                                    <span *ngIf="registrationForm.controls.nickname.hasError('required')">The field is mandatory</span>
+                                    <span *ngIf="registrationForm.controls.nickname.hasError('pattern')">The field cannot contain special characters</span>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mb-4">
+                            <mat-form-field class="w-full">
+                                <mat-label class="text-gray-400">Email</mat-label>
+                                <input 
+                                    required
+                                    matInput
+                                    formControlName="email"
+                                    class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+                                />
+                                <mat-error *ngIf="registrationForm.controls.email.touched && registrationForm.controls.email.invalid">
+                                    <span *ngIf="registrationForm.controls.email.hasError('required')">The field is mandatory</span>
+                                    <span *ngIf="registrationForm.controls.email.hasError('email')">The field contains an invalid email address</span>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mb-4">
+                            <mat-form-field class="w-full">
+                                <mat-label class="text-gray-400">Password</mat-label>
+                                <input 
+                                    required
+                                    matInput
+                                    formControlName="password"
+                                    [type]="hidePassword ? 'password' : 'text'"
+                                    class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+                                />
+                                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                    <mat-icon>{{hidePassword?'visibility_off':'visibility'}}</mat-icon>
+                                </button>
+                                <mat-error *ngIf="registrationForm.controls.password.touched && registrationForm.controls.password.invalid">
+                                    <span *ngIf="registrationForm.controls.password.hasError('required')">The field is mandatory</span>
+                                    <span *ngIf="registrationForm.controls.password.hasError('minlength')">The password must contain at least 8 characters</span>
+                                    <span *ngIf="registrationForm.controls.password.hasError('pattern') && !registrationForm.controls.password.hasError('minlength')">{{passwordErrorMessage(registrationForm.controls.password.value)}}</span>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div>
+                            <button class="w-full" mat-raised-button color="primary" type="submit">
+                                Register
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="flex items-center gap-2 justify-center mt-9">
+                        Already registered? <button (click)="togglePannel()" mat-button color="primary">Login</button>
+                    </div>
+                </div>
+
+
+                <div class="login-form">
+                    <h1 class="text-lg font-bold text-center pb-8">Login</h1>
+                    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="">
+                        <div class="mb-4">
+                            <mat-form-field class="w-full">
+                                <mat-label class="text-gray-400">Email</mat-label>
+                                <input 
+                                    required
+                                    matInput
+                                    formControlName="email"
+                                    class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div class="mb-4">
+                            <mat-form-field class="w-full">
+                                <mat-label class="text-gray-400">Password</mat-label>
+                                <input 
+                                    required
+                                    matInput
+                                    formControlName="password"
+                                    [type]="hidePassword ? 'password' : 'text'"
+                                    class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+                                />
+                                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                    <mat-icon>{{hidePassword?'visibility_off':'visibility'}}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <button class="w-full" mat-raised-button color="primary" type="submit">
+                                Login
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="flex items-center gap-2 justify-center mt-9">
+                        Not registered yet? <button (click)="togglePannel()" mat-button color="primary">Register</button>
+                    </div>
+
+                    <div class="text-center">
+                        <button (click)="handleOpenForgotPasswordForm()" mat-button color="primary">Forgot password?</button>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

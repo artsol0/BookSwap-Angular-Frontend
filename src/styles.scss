@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { 
+    height: 100%; 
+}
+
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+.snackbar-success {
+    .mdc-snackbar__surface {
+        background-color: #e4fcfb !important;
+        border: 1px solid #c2eefc !important;
+    }
+  
+    .mdc-snackbar__label {
+        color: var(--color-primary) !important;
+    }
+}
+
+.snackbar-error {
+    .mdc-snackbar__surface {
+        background-color: #fce4e4 !important;
+        border: 1px solid #fcc2c3 !important;
+    }
+  
+    .mdc-snackbar__label {
+        color: #cc0033 !important;
+    }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
