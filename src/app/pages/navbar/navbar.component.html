@@ -1,16 +1,39 @@
 <p>
     <mat-toolbar class="flex items-center justify-between" color="primary">
       <div>
-        <span>Book<i>Swap</i></span>
+        <a [routerLink]="['/home']"><span>Book<i>Swap</i></span></a>
       </div>
       <div>
-        <span class="example-spacer"></span>
-        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-          <mat-icon>favorite</mat-icon>
+        <button mat-icon-button aria-label="Search">
+          <mat-icon>search</mat-icon>
         </button>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-          <mat-icon>share</mat-icon>
-        </button>
+        <ng-template [ngIf]="!isLoggedIn()">
+          <button mat-icon-button aria-label="Login" (click)="goToAuthPage()">
+            <mat-icon>login</mat-icon>
+          </button>
+        </ng-template>
+        <ng-template [ngIf]="isLoggedIn()">
+          <button mat-icon-button aria-label="Logout" (click)="handleOpenLogoutDialog()">
+            <mat-icon>logout</mat-icon>
+          </button>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="goToLibraryPage()">
+              <mat-icon>book</mat-icon>
+              <span>Library</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>swap_horiz</mat-icon>
+              <span>Exchanges</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>person</mat-icon>
+              <span>Profile</span>
+            </button>
+          </mat-menu>          
+        </ng-template>
       </div>
     </mat-toolbar>
 </p>

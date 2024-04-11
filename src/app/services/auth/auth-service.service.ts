@@ -16,14 +16,6 @@ export class AuthServiceService {
     user:null
   })
 
-  // login(userData:any):Observable<any> {
-  //   return this.http.post<any>(`${this.baseUrl}/api/v1/auth/authenticate`, userData)
-  // }
-
-  // register(userData:any):Observable<any> {
-  //   return this.http.post<any>(`${this.baseUrl}/api/v1/auth/register`, userData)
-  // }
-
   login(userData:any) {
     return this.http.post(this.baseUrl + "/api/v1/auth/authenticate", userData, {
       headers:new HttpHeaders().set('Content-Type','application/json')
@@ -42,11 +34,20 @@ export class AuthServiceService {
     })
   }
 
+  isAuthenticated():boolean {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   getUserProfile():Observable<any> {
     const headers = new HttpHeaders({
-      Authorization:`Bearer ${localStorage.getItem("jwt")}`
+      Authorization:`Bearer ${localStorage.getItem("token")}`
     })
-    return this.http.post<any>(`${this.baseUrl}/api/v1/auth/register`, {headers}).pipe(
+    return this.http.get<any>(`${this.baseUrl}/api/v1/user/get/current`, {headers}).pipe(
       tap((user)=>{
         const curentState = this.authSubject.value;
         this.authSubject.next({...curentState, user})

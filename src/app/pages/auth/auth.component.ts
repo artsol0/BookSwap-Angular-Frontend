@@ -9,11 +9,12 @@ import { AuthServiceService } from '../../services/auth/auth-service.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ForgotPasswordFormComponent } from '../forgot-password-form/forgot-password-form.component';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, MatInputModule, MatFormFieldModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatIconModule],
+  imports: [CommonModule, MatInputModule, MatFormFieldModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatIconModule, RouterModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
@@ -23,7 +24,7 @@ export class AuthComponent {
   reponseMessage:any;
   errorMessage = '';
 
-  constructor(public authService:AuthServiceService, public snackbarService:SnackbarService, public dialog: MatDialog) {
+  constructor(private authService:AuthServiceService, private snackbarService:SnackbarService, private dialog: MatDialog, private router: Router) {
   }
 
   registrationForm = new FormGroup({
@@ -63,6 +64,7 @@ export class AuthComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response: any) => {
           localStorage.setItem('token', response.data.token);
+          this.router.navigate(["/home"]);
         },
         error: (error: any) => {
           if (error.error?.error.message) {
