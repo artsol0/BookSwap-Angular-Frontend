@@ -27,6 +27,10 @@ export class NavbarComponent {
     this.router.navigate(['/library']);
   }
 
+  goToProfilePage() {
+    this.router.navigate(['/profile'])
+  }
+
   isLoggedIn():boolean {
     return this.authService.isAuthenticated();
   }
