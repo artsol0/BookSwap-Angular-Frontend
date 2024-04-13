@@ -1,0 +1,62 @@
+<form [formGroup]="updatePhotoForm" (ngSubmit)="handlePhotoUpdating()" enctype="multipart/form-data" class="w-full sm:w-[27rem] p-6 rounded-lg shadow-md">
+    <div class="flex items-center justify-content mb-2">
+        <button mat-icon-button matPrefix color="primary" type="reset" (click)="f_input.click()">
+            <mat-icon>attach_file</mat-icon>
+        </button>
+        {{fileName || "No file uploaded yet."}}
+        <input 
+            type="file"
+            required
+            hidden
+            #f_input
+            formControlName="photo"
+            (change)="handleFileSelected($event)"
+            class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+        />
+    </div>
+    <div>
+        <mat-dialog-actions>
+            <button mat-raised-button [mat-dialog-close]="true" color="primary" type="submit" [disabled]="!(updatePhotoForm.valid && updatePhotoForm.dirty)">Update</button>
+        </mat-dialog-actions>
+    </div>
+</form>
+<form [formGroup]="updateLocationForm" (ngSubmit)="handleLocationUpdating()" class="w-full sm:w-[27rem] p-6 rounded-lg shadow-md">
+    <div class="mb-2">
+        <mat-form-field class="w-full">
+            <mat-label class="text-gray-400">Contry</mat-label>
+            <input 
+                required
+                matInput
+                formControlName="country"
+                class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+            />
+            <mat-error *ngIf="updateLocationForm.controls.country.touched && updateLocationForm.controls.country.invalid">
+                <span *ngIf="updateLocationForm.controls.country.hasError('required')">The field is mandatory</span>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="mb-2">
+        <mat-form-field class="w-full">
+            <mat-label class="text-gray-400">City</mat-label>
+            <input 
+                required
+                matInput
+                formControlName="city"
+                class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+            />
+            <mat-error *ngIf="updateLocationForm.controls.city.touched && updateLocationForm.controls.city.invalid">
+                <span *ngIf="updateLocationForm.controls.city.hasError('required')">The field is mandatory</span>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-dialog-actions>
+            <button mat-raised-button [mat-dialog-close]="true" color="primary" type="submit" [disabled]="!(updateLocationForm.valid && updateLocationForm.dirty)">Update</button>
+        </mat-dialog-actions>
+    </div>
+</form>
+<div class="flex justify-end">
+    <mat-dialog-actions>
+        <button mat-raised-button cdkFocusInitial mat-dialog-close color="primary">Cancel</button>
+    </mat-dialog-actions>
+</div>

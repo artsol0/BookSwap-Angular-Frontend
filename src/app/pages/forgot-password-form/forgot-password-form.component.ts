@@ -20,7 +20,7 @@ export class ForgotPasswordFormComponent {
   reponseMessage:any;
   errorMessage = '';
 
-  constructor(public authService:AuthServiceService, public snackbarService:SnackbarService, public dialog: MatDialog) {
+  constructor(public authService:AuthServiceService, public snackbarService:SnackbarService, private dialog: MatDialog) {
   }
 
   forgotPasswordForm = new FormGroup({

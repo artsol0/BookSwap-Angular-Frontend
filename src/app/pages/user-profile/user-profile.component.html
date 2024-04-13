@@ -10,34 +10,33 @@
             <h1 class="text-3xl font-bold pt-8 lg:pt-0">{{user.nickname}}</h1>
             <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-blue-800 opacity-25"></div>
             <p class="pt-4 text-base flex items-center justify-center lg:justify-start">
-                <mat-icon class="text-blue-800">sentiment_neutral</mat-icon>
-                {{user.points}} points
+                <mat-icon class="{{setSentimentColor()}}">{{setSentiment()}}</mat-icon>
+                <span class="pl-2">{{user.points}} points</span>
             </p>
             <div class="mx-auto lg:mx-0 w-4/5 border-b-2 border-blue-800 opacity-25"></div>
             <p class="pt-4 text-base flex items-center justify-center lg:justify-start">
                 <mat-icon class="text-blue-800">mail</mat-icon>
                 {{user.email}}
             </p>
-            <p class="pt-2 text-base flex items-center justify-center lg:justify-start">
+            <p class="pt-1 text-base flex items-center justify-center lg:justify-start">
                 <mat-icon class="text-blue-800">location_on</mat-icon>
                 {{user.country}}, {{user.city}}
             </p>
-            <p class="pt-2 text-base flex items-center justify-center lg:justify-start">
+            <p class="pt-1 text-base flex items-center justify-center lg:justify-start">
                 <mat-icon class="text-blue-800">calendar_month</mat-icon>
                 {{user.registrationDate}}
             </p>
-            <div class="pt-12 pb-8">
-                <button mat-raised-button>Change</button>
+            <div class="flex pt-11 pb-8 justify-between">
+                <button mat-raised-button (click)="handleOpenUpdateProfileForm(user)">Change</button>
+                <button mat-raised-button color="warn" (click)="handleOpenChangePasswordForm()">Reset password</button>
             </div>
         </div>
 
     </div>
 
-    <!--Img Col-->
     <div class="w-full lg:w-2/5">
         <!-- Big profile image for side bar (desktop) -->
         <img [src]="'data:image/JPEG;base64,' + user.photo" class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block">
-        <!-- Image from: http://unsplash.com/photos/MP0IUfwrn0A -->
 
     </div>
 
