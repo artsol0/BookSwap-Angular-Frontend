@@ -11,21 +11,17 @@ export class LibraryService {
 
   constructor(private http:HttpClient) { }
 
-  librarySubject = new BehaviorSubject<any>({
-    books:[],
-    loading:false,
-    newBook:null
-  });
-
   getLibraryBooks():Observable<any> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
     });
-    return this.http.get<any>(`${this.baseUrl}/api/v1/library/get-books`, {headers}).pipe(
-      tap((books)=>{
-        const curentState = this.librarySubject.value;
-        this.librarySubject.next({...curentState, books});
-      })
-    );
+    return this.http.get<any>(`${this.baseUrl}/api/v1/library/get-books`, {headers});
+  }
+
+  addNewBook(formData: FormData) {
+    const headers = new HttpHeaders({
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    });
+    return this.http.post(this.baseUrl + "/api/v1/book/add", formData, {headers});
   }
 }
