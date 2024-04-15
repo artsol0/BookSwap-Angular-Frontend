@@ -24,4 +24,11 @@ export class LibraryService {
     });
     return this.http.post(this.baseUrl + "/api/v1/book/add", formData, {headers});
   }
+
+  deleteBook(id:any) {
+    const headers = new HttpHeaders({
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    }).set('Content-Type','application/json');
+    return this.http.delete(this.baseUrl + "/api/v1/book/delete/" + id, {headers});
+  }
 }

@@ -1,21 +1,20 @@
-<mat-card class="card">
+<mat-card class="card h-full">
     <mat-card-header class="mb-2">
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
     </mat-card-header>
-    <img class="max-h-[400px] object-cover object-cover" [src]="'data:image/JPEG;base64,' + book.photo" alt="Photo of a Shiba Inu">
+    <img class="max-h-[400px] object-cover" [src]="'data:image/JPEG;base64,' + book.photo" alt="Photo of a Shiba Inu">
     <mat-card-content class="mt-2">
       <p>
         {{book.description}}
       </p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions class="mt-auto">
       <button mat-icon-button aria-label="Edit">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button aria-label="Delete">
+      <button mat-icon-button aria-label="Delete" (click)="handleDeleteBook(book)">
         <mat-icon>delete</mat-icon>
       </button>
     </mat-card-actions>
 </mat-card>
-  
