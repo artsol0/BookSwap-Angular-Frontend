@@ -9,12 +9,19 @@
         {{book.description}}
       </p>
     </mat-card-content>
-    <mat-card-actions class="mt-auto">
-      <button mat-icon-button aria-label="Edit">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Delete" (click)="handleDeleteBook(book)">
-        <mat-icon>delete</mat-icon>
-      </button>
+    <mat-card-actions class="mt-auto justify-between">
+      <div>
+        <a [routerLink]="['/book',book.id]" mat-icon-button aria-label="Overview">
+          <mat-icon>open_in_new</mat-icon>
+        </a>
+      </div>
+      <div>
+        <button mat-icon-button aria-label="Edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Delete" (click)="handleDeleteBook(book)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     </mat-card-actions>
 </mat-card>

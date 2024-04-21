@@ -1,0 +1,63 @@
+<section class="py-8 bg-white md:py-16 antialiased">
+    <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+        <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
+          <img class="w-full rounded-lg" [src]="'data:image/JPEG;base64,' + book.photo" alt="" />
+          <img class="w-full rounded-lg hidden" [src]="'data:image/JPEG;base64,' + book.photo" alt="" />
+        </div>
+
+        <div class="mt-6 sm:mt-8 lg:mt-0">
+          <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">
+            {{book.author}}
+          </h1>
+          <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
+            <p class="text-2xl font-extrabold text-gray-900 sm:text-3xl">
+              {{book.title}}
+            </p>
+          </div>
+
+          <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+            <div class="flex items-center justify-center">
+                <button mat-stroked-button>
+                    <mat-icon>favorite</mat-icon>
+                    Add to wishlist
+                </button>
+            </div>
+            <div class="flex items-center justify-center mt-4 sm:mt-0">
+                <button mat-flat-button color="primary">
+                    <mat-icon>swap_horiz</mat-icon>
+                    Exchange
+                </button>
+            </div>
+          </div>
+
+          <hr class="my-6 md:my-8 border-gray-300" />
+
+          <p class="mb-6 text-gray-600">
+            {{book.description}}
+          </p>
+
+          <hr class="my-6 md:my-8 border-gray-300" />
+
+          <dl class="flex items-center space-x-6">
+            <div>
+                <dt class="mb-2 font-semibold leading-none text-gray-900">Genre</dt>
+                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{book.genres}}</dd>
+            </div>
+            <div>
+                <dt class="mb-2 font-semibold leading-none text-gray-900">Quality</dt>
+                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{book.quality}}</dd>
+            </div>
+            <div>
+                <dt class="mb-2 font-semibold leading-none text-gray-900">Status</dt>
+                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{book.status}}</dd>
+            </div>
+            <div>
+                <dt class="mb-2 font-semibold leading-none text-gray-900">Language</dt>
+                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{book.language}}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+</section>

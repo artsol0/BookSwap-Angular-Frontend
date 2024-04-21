@@ -7,11 +7,12 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { LibraryService } from '../../services/library/library.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { LibraryComponent } from '../library/library.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-book-card',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule,  MatDialogModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule,  MatDialogModule, RouterModule],
   templateUrl: './book-card.component.html',
   styleUrl: './book-card.component.scss'
 })
