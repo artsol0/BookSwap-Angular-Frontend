@@ -5,12 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { BookService } from '../../services/book/book.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
+import { BookReviewsComponent } from '../book-reviews/book-reviews.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-book-overview',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, RouterModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, RouterModule, BookReviewsComponent],
   templateUrl: './book-overview.component.html',
   styleUrl: './book-overview.component.scss'
 })
