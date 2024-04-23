@@ -46,7 +46,7 @@ export class BookReviewsComponent implements OnInit {
       this.userService.getCurrentUserId().subscribe({
         next: data => {
           this.currentUserId = data.data;
-          this.getReviewsData(bookId);
+          this.reviewIsExist();
         },
         error: (error: any) => {
          if (error.error?.error.message) {
@@ -58,6 +58,7 @@ export class BookReviewsComponent implements OnInit {
         }
       });
     }
+    this.getReviewsData(bookId);
   }
 
   getReviewsData(bookId:number) {
@@ -66,7 +67,6 @@ export class BookReviewsComponent implements OnInit {
         this.reviews = [...this.reviews, ...data.data.content];
         this.totalReviews = data.data.totalElements;
         this.totalPages = data.data.totalPages - 1;
-        this.reviewIsExist();
       },
       error: (error: any) => {
        if (error.error?.error.message) {
@@ -112,6 +112,7 @@ export class BookReviewsComponent implements OnInit {
     const sub = dialogRef.componentInstance.onAddReview.subscribe((response)=> {
       this.reviews = [];
       this.getReviewsData(Number(this.route.snapshot.paramMap.get('id')));
+      this.reviewExist = true;
     });
   }
 
@@ -135,6 +136,7 @@ export class BookReviewsComponent implements OnInit {
         this.snackbarService.openSnackBar(this.reponseMessage, "");
         this.reviews = [];
         this.getReviewsData(Number(this.route.snapshot.paramMap.get('id')));
+        this.reviewExist = false;
       },
       error: (error: any) => {
        if (error.error?.error.message) {

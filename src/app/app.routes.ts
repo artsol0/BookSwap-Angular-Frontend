@@ -4,6 +4,7 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { LibraryComponent } from './pages/library/library.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { BookOverviewComponent } from './pages/book-overview/book-overview.component';
+import { BookLocationHistoryComponent } from './pages/book-location-history/book-location-history.component';
 
 export const routes: Routes = [
     {
@@ -30,5 +31,9 @@ export const routes: Routes = [
     {
         path: 'book/:id',
         component: BookOverviewComponent
+    },
+    {
+        path: 'book/:id/location',
+        component: BookLocationHistoryComponent
     }
 ];

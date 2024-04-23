@@ -18,13 +18,13 @@
 
           <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
             <div class="flex items-center justify-center">
-                <button mat-stroked-button>
+                <button mat-stroked-button (click)="handleWishlistAction()">
                     <mat-icon>favorite</mat-icon>
                     Add to wishlist
                 </button>
             </div>
             <div class="flex items-center justify-center mt-4 sm:mt-0">
-                <button mat-flat-button color="primary">
+                <button mat-flat-button color="primary" (click)="handleAddEchange()">
                     <mat-icon>swap_horiz</mat-icon>
                     Exchange
                 </button>
@@ -57,6 +57,13 @@
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{book.language}}</dd>
             </div>
           </dl>
+          
+          <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+              <a [routerLink]="['/book',book.id,'location']" mat-flat-button color="primary">
+                  <mat-icon>public</mat-icon>
+                  Location History
+              </a>
+          </div>
         </div>
       </div>
     </div>

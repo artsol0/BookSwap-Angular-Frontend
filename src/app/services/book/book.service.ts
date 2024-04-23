@@ -14,4 +14,8 @@ export class BookService {
   getBook(id:number) :Observable<any> {
     return this.http.get<any>(this.baseUrl + "/api/v1/book/get/" + id);
   }
+
+  getBookNotes(id:number) :Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/api/v1/notes/get/" + id);
+  }
 }
