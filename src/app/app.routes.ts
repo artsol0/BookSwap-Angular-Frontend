@@ -5,6 +5,7 @@ import { LibraryComponent } from './pages/library/library.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { BookOverviewComponent } from './pages/book-overview/book-overview.component';
 import { BookLocationHistoryComponent } from './pages/book-location-history/book-location-history.component';
+import { WishlistComponent } from './pages/wishlist/wishlist.component';
 
 export const routes: Routes = [
     {
@@ -12,28 +13,11 @@ export const routes: Routes = [
         redirectTo: 'home', 
         pathMatch: 'full'
     },
-    {
-        path: 'home',
-        component: HomeComponent
-    },
-    {
-        path: 'auth',
-        component: AuthComponent
-    },
-    {
-        path: 'library',
-        component: LibraryComponent
-    },
-    {
-        path: 'profile',
-        component: UserProfileComponent
-    },
-    {
-        path: 'book/:id',
-        component: BookOverviewComponent
-    },
-    {
-        path: 'book/:id/location',
-        component: BookLocationHistoryComponent
-    }
+    { path: 'home', component: HomeComponent },
+    { path: 'auth', component: AuthComponent },
+    { path: 'library', component: LibraryComponent },
+    { path: 'wishlist', component: WishlistComponent },
+    { path: 'profile', component: UserProfileComponent },
+    { path: 'book/:id', component: BookOverviewComponent },
+    { path: 'book/:id/location', component: BookLocationHistoryComponent }
 ];

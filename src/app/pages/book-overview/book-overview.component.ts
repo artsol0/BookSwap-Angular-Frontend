@@ -24,6 +24,10 @@ export class BookOverviewComponent implements OnInit {
   reponseMessage:any;
   userIsAuth:boolean = false;
 
+  isUserBookOwner:boolean = false;
+  isBookInWishlist:boolean = false;
+  isBookInExchange:boolean = false;
+
   constructor (
      private route: ActivatedRoute,
      private router: Router, 
@@ -36,6 +40,9 @@ export class BookOverviewComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.userIsAuth = this.authService.isAuthenticated();
     this.getBookData(id);
+    if (this.userIsAuth) {
+      this.getBookAdditonalInfo(id);
+    }
   }
 
   getBookData(bookId:number) {
@@ -52,24 +59,61 @@ export class BookOverviewComponent implements OnInit {
          this.snackbarService.openSnackBar(this.errorMessage, "error");
        }
     });
-  } 
+  }
+
+  getBookAdditonalInfo(bookId:number) {
+    this.bookService.getBookAdditionalInfo(bookId).subscribe({
+      next: data => {
+        this.isUserBookOwner = data.data.userBookOwner;
+        this.isBookInWishlist = data.data.bookInWishlist;
+        this.isBookInExchange = data.data.bookInExchange;
+      },
+      error: (error: any) => {
+        if (error.error?.error.message) {
+           this.errorMessage = error.error?.error.message;
+         } else {
+           this.errorMessage = "Unexpected error occurred";
+         }
+         this.snackbarService.openSnackBar(this.errorMessage, "error");
+       }
+    })
+  }
 
   handleWishlistAction() {
     if (this.userIsAuth) {
-      this.wishlistService.addBookToWishlist(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
-        next: (response: any) => {
-          this.reponseMessage = response?.message;
-          this.snackbarService.openSnackBar(this.reponseMessage, "");
-        },
-        error: (error: any) => {
-         if (error.error?.error.message) {
-            this.reponseMessage = error.error?.error.message;
-          } else {
-            this.reponseMessage = "Unexpected error occurred";
+      if (!this.isBookInWishlist) {
+        this.wishlistService.addBookToWishlist(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
+          next: (response: any) => {
+            this.reponseMessage = response?.message;
+            this.isBookInWishlist = true;
+            this.snackbarService.openSnackBar(this.reponseMessage, "");
+          },
+          error: (error: any) => {
+           if (error.error?.error.message) {
+              this.reponseMessage = error.error?.error.message;
+            } else {
+              this.reponseMessage = "Unexpected error occurred";
+            }
+            this.snackbarService.openSnackBar(this.reponseMessage, "error");
           }
-          this.snackbarService.openSnackBar(this.reponseMessage, "error");
-        }
-      });
+        });
+      } else {
+        this.wishlistService.removeBookFromWishlist(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
+          next: (response: any) => {
+            this.reponseMessage = response?.message;
+            this.isBookInWishlist = false;
+            this.snackbarService.openSnackBar(this.reponseMessage, "");
+          },
+          error: (error: any) => {
+           if (error.error?.error.message) {
+              this.reponseMessage = error.error?.error.message;
+            } else {
+              this.reponseMessage = "Unexpected error occurred";
+            }
+            this.snackbarService.openSnackBar(this.reponseMessage, "error");
+          }
+        });
+      }
     } else {
       this.router.navigate(['/auth']);
     }

@@ -1,0 +1,32 @@
+<div class="pb-5">
+    <div class="flex justify-center flex-wrap gap-5">
+        <mat-card class="card" *ngFor="let book of books; trackBy: trackById">
+            <mat-card-header class="mb-2">
+                <mat-card-title>{{book.title}}</mat-card-title>
+                <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+              </mat-card-header>
+              <img class="max-h-[400px] object-cover" [src]="'data:image/JPEG;base64,' + book.photo" alt="Photo of a Shiba Inu">
+              <mat-card-content class="mt-2">
+                <p>
+                  {{book.description}}
+                </p>
+              </mat-card-content>
+              <mat-card-actions class="mt-auto justify-between">
+                <div>
+                  <a [routerLink]="['/book',book.id]" mat-icon-button aria-label="Overview">
+                    <mat-icon>open_in_new</mat-icon>
+                  </a>
+                  <button mat-icon-button aria-label="Delete" (click)="handleRemoveBookFromWishlist(book)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+                <div>
+                  <b class="text-[#3F51B5]">{{book.status}}</b>
+                </div>
+              </mat-card-actions>
+        </mat-card>
+        <div *ngIf="books.length === 0" class="min-h-[100vh]">
+            <h3>There are no books in the wishlist</h3>
+        </div>
+    </div>
+</div>

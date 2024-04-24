@@ -18,13 +18,14 @@
 
           <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
             <div class="flex items-center justify-center">
-                <button mat-stroked-button (click)="handleWishlistAction()">
+                <button mat-stroked-button (click)="handleWishlistAction()" [disabled]="isUserBookOwner">
                     <mat-icon>favorite</mat-icon>
-                    Add to wishlist
+                    <span *ngIf="isBookInWishlist">Remove from wishlist</span>
+                    <span *ngIf="!isBookInWishlist">Add to wishlist</span>
                 </button>
             </div>
             <div class="flex items-center justify-center mt-4 sm:mt-0">
-                <button mat-flat-button color="primary" (click)="handleAddEchange()">
+                <button mat-flat-button color="primary" (click)="handleAddEchange()" [disabled]="isUserBookOwner || isBookInExchange">
                     <mat-icon>swap_horiz</mat-icon>
                     Exchange
                 </button>

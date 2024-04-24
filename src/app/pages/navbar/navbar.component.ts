@@ -27,6 +27,10 @@ export class NavbarComponent {
     this.router.navigate(['/library']);
   }
 
+  goToWishlistPage() {
+    this.router.navigate(['/wishlist']);
+  }
+
   goToProfilePage() {
     this.router.navigate(['/profile'])
   }
