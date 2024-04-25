@@ -6,6 +6,7 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { BookService } from '../../services/book/book.service';
 import { AuthServiceService } from '../../services/auth/auth-service.service';
 import { WishlistService } from '../../services/wishlist/wishlist.service';
+import { ExchangeService } from '../../services/exchange/exchange.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { BookReviewsComponent } from '../book-reviews/book-reviews.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -34,6 +35,7 @@ export class BookOverviewComponent implements OnInit {
      private bookService: BookService, 
      private authService:AuthServiceService, 
      private wishlistService:WishlistService,
+     private exchangeService:ExchangeService,
      private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
@@ -121,7 +123,21 @@ export class BookOverviewComponent implements OnInit {
 
   handleAddEchange() {
     if (this.userIsAuth) {
-
+      this.exchangeService.createNewExchange(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
+        next: (response: any) => {
+          this.reponseMessage = response?.message;
+          this.isBookInExchange = true;
+          this.snackbarService.openSnackBar(this.reponseMessage, "");
+        },
+        error: (error: any) => {
+         if (error.error?.error.message) {
+            this.reponseMessage = error.error?.error.message;
+          } else {
+            this.reponseMessage = "Unexpected error occurred";
+          }
+          this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        }
+      })
     } else {
       this.router.navigate(['/auth']);
     }

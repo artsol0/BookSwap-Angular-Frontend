@@ -6,6 +6,7 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 import { BookOverviewComponent } from './pages/book-overview/book-overview.component';
 import { BookLocationHistoryComponent } from './pages/book-location-history/book-location-history.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
+import { ExchangesComponent } from './pages/exchanges/exchanges.component';
 
 export const routes: Routes = [
     {
@@ -17,6 +18,7 @@ export const routes: Routes = [
     { path: 'auth', component: AuthComponent },
     { path: 'library', component: LibraryComponent },
     { path: 'wishlist', component: WishlistComponent },
+    { path: 'exchanges', component: ExchangesComponent },
     { path: 'profile', component: UserProfileComponent },
     { path: 'book/:id', component: BookOverviewComponent },
     { path: 'book/:id/location', component: BookLocationHistoryComponent }

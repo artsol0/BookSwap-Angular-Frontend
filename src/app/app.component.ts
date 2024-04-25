@@ -9,11 +9,15 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { HomeComponent } from './pages/home/home.component';
 import { BookOverviewComponent } from './pages/book-overview/book-overview.component';
 import { BookLocationHistoryComponent } from './pages/book-location-history/book-location-history.component';
+import { ExchangesComponent } from './pages/exchanges/exchanges.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, FooterComponent, LibraryComponent, WishlistComponent, AuthComponent, HomeComponent, BookOverviewComponent, BookLocationHistoryComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, 
+    FooterComponent, LibraryComponent, WishlistComponent, 
+    AuthComponent, HomeComponent, BookOverviewComponent, 
+    BookLocationHistoryComponent, ExchangesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

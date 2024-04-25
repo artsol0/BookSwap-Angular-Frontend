@@ -17,7 +17,7 @@ import { LogoutDialogComponent } from '../logout-dialog/logout-dialog.component'
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  constructor(private router: Router, private authService:AuthServiceService, private dialog: MatDialog) {} // Inject Router
+  constructor(private router: Router, private authService:AuthServiceService, private dialog: MatDialog) {}
 
   goToAuthPage() {
     this.router.navigate(['/auth']);
@@ -29,6 +29,10 @@ export class NavbarComponent {
 
   goToWishlistPage() {
     this.router.navigate(['/wishlist']);
+  }
+
+  goToExchangesPage() {
+    this.router.navigate(['/exchanges']);
   }
 
   goToProfilePage() {
