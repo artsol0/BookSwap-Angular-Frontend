@@ -4,7 +4,7 @@
         <a [routerLink]="['/home']"><span>Book<i>Swap</i></span></a>
       </div>
       <div>
-        <button mat-icon-button aria-label="Search">
+        <button mat-icon-button aria-label="Search" (click)="goToSearchPage()">
           <mat-icon>search</mat-icon>
         </button>
         <ng-template [ngIf]="!isLoggedIn()">

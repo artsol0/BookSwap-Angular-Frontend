@@ -39,7 +39,7 @@
   
       </div>
   
-      <div *ngIf="totalPages != page" class="mt-6 text-center">
+      <div *ngIf="totalPages != page && totalReviews > 0" class="mt-6 text-center">
         <button mat-flat-button color="primary" (click)="loadMoreReviews()">View more reviews</button>
       </div>
     </div>

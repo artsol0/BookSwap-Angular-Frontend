@@ -23,6 +23,10 @@ export class NavbarComponent {
     this.router.navigate(['/auth']);
   }
 
+  goToSearchPage() {
+    this.router.navigate(['/search'])
+  }
+
   goToLibraryPage() {
     this.router.navigate(['/library']);
   }

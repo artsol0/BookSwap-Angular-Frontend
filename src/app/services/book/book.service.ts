@@ -15,6 +15,10 @@ export class BookService {
     return this.http.get<any>(this.baseUrl + "/api/v1/book/get/" + id);
   }
 
+  getAllBooks(page:number, keyword:string) :Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/api/v1/book/get/all?page=" + page + "&keyword=" + keyword);
+  }
+
   getBookAdditionalInfo(id:number) :Observable<any> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`

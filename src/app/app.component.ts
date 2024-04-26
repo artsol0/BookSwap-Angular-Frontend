@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './pages/navbar/navbar.component';
+import { SearchComponent } from './pages/search/search.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { LibraryComponent } from './pages/library/library.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
@@ -17,7 +18,7 @@ import { ExchangesComponent } from './pages/exchanges/exchanges.component';
   imports: [CommonModule, RouterOutlet, NavbarComponent, 
     FooterComponent, LibraryComponent, WishlistComponent, 
     AuthComponent, HomeComponent, BookOverviewComponent, 
-    BookLocationHistoryComponent, ExchangesComponent],
+    BookLocationHistoryComponent, ExchangesComponent, SearchComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

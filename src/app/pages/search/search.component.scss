@@ -1,0 +1,26 @@
+.book-cards {
+    column-count: 4;
+    column-gap: 1em;
+}
+
+.book-card__wrapper {
+    background-color: #eee;
+    display: inline-block;
+    margin: 0 0 1em;
+    width: 100%;
+}
+
+@media only screen and (max-width: 480px) {
+    .book-cards {
+        column-count: 1;
+        column-gap: 1em;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .book-cards {
+        column-count: 2;
+        column-gap: 1em;
+    }
+}
+
