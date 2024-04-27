@@ -1,41 +1,103 @@
-<div class="min-h-dvh pb-5 pl-4 pr-4">
-    <mat-form-field class="w-2/4">
-        <mat-label class="text-gray-400">Search</mat-label>
-        <input 
-            #searchkeyword
-            (keyup)="searchByKeyword(searchkeyword.value)"
-            matInput
-            name="keyword"
-            id="keyword"
-            placeholder="Book title or author"
-            class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
-        />
-    </mat-form-field>
-    <div class="book-cards">
-        <div class="book-card__wrapper bg-white border border-gray-200 rounded-lg shadow" *ngFor="let book of books; trackBy: trackById">
-            <a [routerLink]="['/book',book.id]">
-                <img class="rounded-t-lg w-full" [src]="'data:image/JPEG;base64,' + book.photo" alt="" />
-            </a>
-            <div class="p-5">
-                <a [routerLink]="['/book',book.id]">
-                    <span class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{book.title}}</span>
-                </a>
-                <p class="mb-3 font-normal text-gray-700">{{book.description}}</p>
-                <div class="flex justify-between items-center">
-                    <a [routerLink]="['/book',book.id]" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                        Read more
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
-                    <b class="text-[#3F51B5]">{{book.status}}</b>
-                </div>
+<mat-sidenav-container>
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="{{mobileQuery.matches ? 0 : 56}}">
+        <form [formGroup]="filterBookForm" (ngSubmit)="handleFilterBooks()" class="w-full sm:w-[27rem] p-6 rounded-lg">
+            <div class="mb-2">
+                <mat-form-field class="w-full">
+                    <mat-label class="text-gray-400">Genres</mat-label>
+                    <mat-select formControlName="genres" [value]="selectedGenres" multiple>
+                    <mat-option *ngFor="let genre of genres" [value]="genre.id">
+                        {{ genre.genre }}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
-        </div>
-    </div>
-    <div class="flex justify-center">
-        <mat-paginator [length]="totalBooks" [pageSize]="pageSize" aria-label="Select page">
-        </mat-paginator>
-    </div>
-</div>
+            <div class="mb-2">
+                <mat-form-field class="w-full">
+                    <mat-label class="text-gray-400">Language</mat-label>
+                    <mat-select formControlName="language">
+                    <mat-option *ngFor="let language of languages" [value]="language.id">
+                        {{ language.language }}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="mb-2">
+                <mat-form-field class="w-full">
+                    <mat-label class="text-gray-400">Quality</mat-label>
+                    <mat-select formControlName="quality">
+                    <mat-option *ngFor="let quality of qualities" [value]="quality.id">
+                        {{ quality.quality }}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="mb-2">
+                <mat-form-field class="w-full">
+                    <mat-label class="text-gray-400">Status</mat-label>
+                    <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of statuses" [value]="status.id">
+                        {{ status.status }}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="flex justify-around">
+                <button class="w-2/5" mat-raised-button color="primary" type="submit" (click)="snav.toggle()" [disabled]="!filterBookForm.dirty">
+                    Filter
+                </button>
+                <button class="w-2/5" mat-raised-button color="primary" type="reset" [disabled]="!filterBookForm.dirty">
+                    Reset
+                </button>
+            </div>
+        </form>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="min-h-dvh py-5 px-4">
+          <mat-form-field class="w-2/4 pl-2">
+              <mat-label class="text-gray-400">Search</mat-label>
+              <input 
+                  #searchkeyword
+                  (keyup)="searchByKeyword(searchkeyword.value)"
+                  matInput
+                  name="keyword"
+                  id="keyword"
+                  placeholder="Book title or author"
+                  class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+              />
+              <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <div class="book-cards">
+              <div class="book-card__wrapper bg-white border border-gray-200 rounded-lg shadow" *ngFor="let book of books; trackBy: trackById">
+                  <a [routerLink]="['/book',book.id]">
+                      <img class="rounded-t-lg w-full" [src]="'data:image/JPEG;base64,' + book.photo" alt="" />
+                  </a>
+                  <div class="p-5">
+                      <a [routerLink]="['/book',book.id]">
+                          <span class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{book.title}}</span>
+                      </a>
+                      <p>
+                          <span class="mb-2 text-4xs font-bold tracking-tight text-gray-900">{{book.author}}</span>
+                      </p>
+                      <p class="mb-3 font-normal text-gray-700">{{book.description}}</p>
+                      <div class="flex justify-between items-center">
+                          <a mat-flat-button color="primary" [routerLink]="['/book',book.id]">
+                              Read more
+                              <mat-icon>arrow_right_alt</mat-icon>
+                          </a>
+                          <b class="text-[#3F51B5]">{{book.status}}</b>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="flex justify-center">
+          <mat-paginator [length]="totalBooks" [pageSize]="pageSize" aria-label="Select page" (page)="pageChanged($event)">
+          </mat-paginator>
+      </div>
+      <div class="fixed bottom-10 right-10">
+        <button mat-fab color="primary" (click)="snav.toggle()"><mat-icon>filter_alt</mat-icon></button>
+      </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
 

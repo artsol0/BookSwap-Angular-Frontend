@@ -4,13 +4,13 @@
     </div>
     <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
       <div class="text-center">
-        <span class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Data to enrich your online business</span>
+        <span class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Expand Your Literary Network</span>
         <div class="mt-6">
-            <p class="text-lg leading-8 text-gray-600">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
+            <p class="text-lg leading-8 text-gray-600">Discover a world of literary exchange where every book tells a story, not just through its pages, but through the hands it passes through.</p>
         </div>
 
         <div class="mt-10 flex items-center justify-center gap-x-6">
-          <a href="#" class="rounded-md bg-[#3F51B5] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950">Get started</a>
+          <a [routerLink]="['/auth']" class="rounded-md bg-[#3F51B5] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950">Get started</a>
           <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span aria-hidden="true">→</span></a>
         </div>
       </div>
@@ -19,7 +19,7 @@
       <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#80c7ff] to-[#89b1fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
     </div>
 </div>
-<mat-tab-group [selectedIndex]="1">
+<mat-tab-group [selectedIndex]="1" class="pt-5">
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon>search</mat-icon>
@@ -29,11 +29,11 @@
             <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
                 <img class="w-full h-60 object-cover rounded-lg" src="https://s2982.pcdn.co/wp-content/uploads/2022/10/browsing-library-shelf.png" alt="dashboard image">
                 <div class="mt-4 md:mt-0">
-                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Let's create more tools and ideas that brings us together.</h2>
-                    <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-600">Flowbite helps you connect with friends and communities of people who share your interests. Connecting with your friends and family as well as discovering new ones is easy with features like Groups.</p>
-                    <a href="#" class="inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900">
-                        Get started
-                        <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Dive into our vast collection of literary works with ease.</h2>
+                    <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-600">Utilize our intuitive search function to browse through genres, authors, and titles, allowing you to uncover hidden gems and cherished classics alike.</p>
+                    <a mat-flat-button [routerLink]="['/search']">
+                      Get started
+                      <mat-icon>arrow_right_alt</mat-icon>
                     </a>
                 </div>
             </div>
@@ -49,11 +49,11 @@
         <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
             <img class="w-full h-60 object-cover rounded-lg" src="https://media.istockphoto.com/id/1176189278/photo/man-and-woman-exchanging-the-books.jpg?s=612x612&w=0&k=20&c=nzRc8ay4re3fylmepxFZqvlaw4UhQ1CwWNdV6Oxx5Cs=" alt="dashboard image">
             <div class="mt-4 md:mt-0">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Let's create more tools and ideas that brings us together.</h2>
-                <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-600">Flowbite helps you connect with friends and communities of people who share your interests. Connecting with your friends and family as well as discovering new ones is easy with features like Groups.</p>
-                <a href="#" class="inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900">
-                    Get started
-                    <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Embrace the spirit of community and sharing by participating in book swaps.</h2>
+                <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-600">Exchange your pre-loved books for new adventures, connecting with fellow readers and broadening your literary horizons in the process.</p>
+                <a mat-flat-button [routerLink]="['/exchanges']">
+                  Get started
+                  <mat-icon>arrow_right_alt</mat-icon>
                 </a>
             </div>
         </div>
@@ -69,11 +69,11 @@
         <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
             <img class="w-full h-60 object-cover rounded-lg" src="https://kahedu.edu.in/n/wp-content/uploads/2021/05/Impact-Of-Reading-Books-On-Your-Mental-Health-990x500.jpg" alt="dashboard image">
             <div class="mt-4 md:mt-0">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Let's create more tools and ideas that brings us together.</h2>
-                <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-600">Flowbite helps you connect with friends and communities of people who share your interests. Connecting with your friends and family as well as discovering new ones is easy with features like Groups.</p>
-                <a href="#" class="inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900">
-                    Get started
-                    <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Immerse yourself in captivating stories and thought-provoking narratives.</h2>
+                <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-600">Whether you're indulging in a beloved favorite or embarking on a literary journey through uncharted territories, our platform provides the perfect backdrop for your reading escapades.</p>
+                <a mat-flat-button [routerLink]="['/library']">
+                  Get started
+                  <mat-icon>arrow_right_alt</mat-icon>
                 </a>
             </div>
         </div>
