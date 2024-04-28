@@ -8,6 +8,7 @@ import { BookOverviewComponent } from './pages/book-overview/book-overview.compo
 import { BookLocationHistoryComponent } from './pages/book-location-history/book-location-history.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { ExchangesComponent } from './pages/exchanges/exchanges.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
     {
@@ -24,5 +25,6 @@ export const routes: Routes = [
     { path: 'exchanges', component: ExchangesComponent },
     { path: 'profile', component: UserProfileComponent },
     { path: 'book/:id', component: BookOverviewComponent },
-    { path: 'book/:id/location', component: BookLocationHistoryComponent }
+    { path: 'book/:id/location', component: BookLocationHistoryComponent },
+    { path: '**', component: PageNotFoundComponent }
 ];

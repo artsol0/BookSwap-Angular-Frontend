@@ -53,12 +53,16 @@ export class BookOverviewComponent implements OnInit {
         this.book = data.data;
       },
       error: (error: any) => {
-        if (error.error?.error.message) {
-           this.errorMessage = error.error?.error.message;
-         } else {
-           this.errorMessage = "Unexpected error occurred";
-         }
-         this.snackbarService.openSnackBar(this.errorMessage, "error");
+        if (error.error?.error.code === 404) {
+          this.router.navigate(['/**'])
+        } else {
+          if (error.error?.error.message) {
+            this.errorMessage = error.error?.error.message;
+          } else {
+            this.errorMessage = "Unexpected error occurred";
+          }
+          this.snackbarService.openSnackBar(this.errorMessage, "error");
+        }
        }
     });
   }
