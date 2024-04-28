@@ -4,7 +4,7 @@
             <div class="mb-2">
                 <mat-form-field class="w-full">
                     <mat-label class="text-gray-400">Genres</mat-label>
-                    <mat-select formControlName="genres" [value]="selectedGenres" multiple>
+                    <mat-select formControlName="genreIds" [value]="selectedGenres" multiple>
                     <mat-option *ngFor="let genre of genres" [value]="genre.id">
                         {{ genre.genre }}
                     </mat-option>
@@ -14,7 +14,7 @@
             <div class="mb-2">
                 <mat-form-field class="w-full">
                     <mat-label class="text-gray-400">Language</mat-label>
-                    <mat-select formControlName="language">
+                    <mat-select formControlName="languageId">
                     <mat-option *ngFor="let language of languages" [value]="language.id">
                         {{ language.language }}
                     </mat-option>
@@ -24,7 +24,7 @@
             <div class="mb-2">
                 <mat-form-field class="w-full">
                     <mat-label class="text-gray-400">Quality</mat-label>
-                    <mat-select formControlName="quality">
+                    <mat-select formControlName="qualityId">
                     <mat-option *ngFor="let quality of qualities" [value]="quality.id">
                         {{ quality.quality }}
                     </mat-option>
@@ -34,7 +34,7 @@
             <div class="mb-2">
                 <mat-form-field class="w-full">
                     <mat-label class="text-gray-400">Status</mat-label>
-                    <mat-select formControlName="status">
+                    <mat-select formControlName="statusId">
                     <mat-option *ngFor="let status of statuses" [value]="status.id">
                         {{ status.status }}
                     </mat-option>
@@ -45,7 +45,7 @@
                 <button class="w-2/5" mat-raised-button color="primary" type="submit" (click)="snav.toggle()" [disabled]="!filterBookForm.dirty">
                     Filter
                 </button>
-                <button class="w-2/5" mat-raised-button color="primary" type="reset" [disabled]="!filterBookForm.dirty">
+                <button class="w-2/5" mat-raised-button color="primary" type="reset" (click)="handleResetFilter()" [disabled]="!filterBookForm.dirty">
                     Reset
                 </button>
             </div>
@@ -91,8 +91,8 @@
               </div>
           </div>
       </div>
-      <div class="flex justify-center">
-          <mat-paginator [length]="totalBooks" [pageSize]="pageSize" aria-label="Select page" (page)="pageChanged($event)">
+      <div>
+          <mat-paginator class="custom-paginator" [length]="totalBooks" [pageSize]="pageSize" aria-label="Select page" (page)="pageChanged($event)">
           </mat-paginator>
       </div>
       <div class="fixed bottom-10 right-10">

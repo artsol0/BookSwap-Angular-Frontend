@@ -10,10 +10,24 @@
     width: 100%;
 }
 
+.custom-paginator {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    background-color: transparent;
+}
+
 @media only screen and (max-width: 480px) {
     .book-cards {
         column-count: 1;
         column-gap: 1em;
+    }
+
+    .custom-paginator {
+        font-size: 0.75rem;
+        line-height: 1rem;
     }
 }
 

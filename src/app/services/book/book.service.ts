@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
@@ -17,6 +17,11 @@ export class BookService {
 
   getAllBooks(page:number, keyword:string) :Observable<any> {
     return this.http.get<any>(this.baseUrl + "/api/v1/book/get/all?page=" + page + "&keyword=" + keyword);
+  }
+
+  getAllBooksByAttributes(page:number, attributesData:any) :Observable<any> {
+    const params = new HttpParams().set('page', page.toString());
+    return this.http.post<any>(this.baseUrl + "/api/v1/book/get/by/attributes?page=" + page, attributesData);
   }
 
   getBookAdditionalInfo(id:number) :Observable<any> {

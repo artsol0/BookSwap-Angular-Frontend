@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input'
@@ -42,6 +42,10 @@ export class SearchComponent implements OnInit {
   qualities: { id: number, quality: string }[] = [];
   statuses: { id: number, status: string }[] = [];
   selectedGenres:number[] = [];
+
+  isFiltered:boolean = false;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor (
     private route: ActivatedRoute,
@@ -135,13 +139,17 @@ export class SearchComponent implements OnInit {
            this.errorMessage = "Unexpected error occurred";
          }
          this.snackbarService.openSnackBar(this.errorMessage, "error");
-       }
+      }
     })
   }
 
   pageChanged(event: PageEvent){
     this.page = event.pageIndex;
-    this.getAllBooks(this.page,'');
+    if (!this.isFiltered) {
+      this.getAllBooks(this.page,'');
+    } else {
+      this.paginator.firstPage();
+    }
   }
 
   searchByKeyword(searchkeyword:string) {
@@ -155,14 +163,44 @@ export class SearchComponent implements OnInit {
   }
 
   filterBookForm = new FormGroup({
-    genres: new FormControl(""),
-    language: new FormControl(""),
-    quality: new FormControl(""),
-    status: new FormControl(""),
+    genreIds: new FormControl([]),
+    qualityId: new FormControl(""),
+    statusId: new FormControl(""),
+    languageId: new FormControl(""),
   });
 
   handleFilterBooks() {
+    this.page = 0;
+    this.books = [];
+    this.isFiltered = true;
+    this.getFilteredBook(this.page);
+  }
 
+  getFilteredBook(page:number) {
+    this.bookService.getAllBooksByAttributes(page, this.filterBookForm.value).subscribe({
+      next: data => {
+        this.books = data.data.content;
+        this.totalBooks = data.data.totalElements;
+        this.totalPages = data.data.totalPages;
+        this.pageSize = data.data.pageable.pageSize;
+        this.paginator.firstPage();
+      },
+      error: (error: any) => {
+        if (error.error?.error.message) {
+           this.errorMessage = error.error?.error.message;
+         } else {
+           this.errorMessage = "Unexpected error occurred";
+         }
+         this.snackbarService.openSnackBar(this.errorMessage, "error");
+      }
+    });
+  }
+
+  handleResetFilter() {
+    this.page = 0;
+    this.books = [];
+    this.isFiltered = false;
+    this.getAllBooks(this.page, '');
   }
 
 }
