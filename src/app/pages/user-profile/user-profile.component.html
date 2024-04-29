@@ -26,9 +26,12 @@
                 <mat-icon class="text-blue-800">calendar_month</mat-icon>
                 {{user.registrationDate}}
             </p>
-            <div class="flex pt-11 pb-8 justify-between">
+            <div *ngIf="isSameUser" class="flex pt-11 pb-8 justify-between">
                 <button mat-raised-button (click)="handleOpenUpdateProfileForm(user)">Change</button>
                 <button mat-raised-button color="warn" (click)="handleOpenChangePasswordForm()">Reset password</button>
+            </div>
+            <div *ngIf="!isSameUser" class="flex pt-11 pb-8 justify-center">
+                <button mat-flat-button color="primary" (click)="handleWriteMessage(user.id)">Write Message</button>
             </div>
         </div>
 

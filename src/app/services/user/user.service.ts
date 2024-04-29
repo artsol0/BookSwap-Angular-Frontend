@@ -17,6 +17,10 @@ export class UserService {
     return this.http.get<any>(this.baseUrl + "/api/v1/user/get/current-id", {headers});
   }
 
+  getUserDataById(id:number) {
+    return this.http.get<any>(this.baseUrl + "/api/v1/user/get/" + id);
+  }
+
   changePussword(passwordData:any) {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`

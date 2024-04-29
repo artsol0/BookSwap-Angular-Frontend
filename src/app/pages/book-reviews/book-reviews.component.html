@@ -20,7 +20,7 @@
               </div>
     
               <div class="space-y-0.5">
-                <p class="text-base font-semibold text-gray-900">{{review.nickname}}</p>
+                <p class="text-base font-semibold text-gray-900"><a target="_blank" [routerLink]="['/user',review.userId,'profile']">{{review.nickname}}</a></p>
                 <img [src]="'data:image/JPEG;base64,' + review.userPhoto" alt="Profile Image" class="w-10 h-10 rounded-full">
               </div>
             </div>

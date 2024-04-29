@@ -19,11 +19,11 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'auth', component: AuthComponent },
     { path: 'search', component: SearchComponent },
-    { path: 'search/page/:id', component: SearchComponent },
     { path: 'library', component: LibraryComponent },
     { path: 'wishlist', component: WishlistComponent },
     { path: 'exchanges', component: ExchangesComponent },
     { path: 'profile', component: UserProfileComponent },
+    { path: 'user/:id/profile', component: UserProfileComponent },
     { path: 'book/:id', component: BookOverviewComponent },
     { path: 'book/:id/location', component: BookLocationHistoryComponent },
     { path: '**', component: PageNotFoundComponent }

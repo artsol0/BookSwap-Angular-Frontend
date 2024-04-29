@@ -147,4 +147,15 @@ export class BookOverviewComponent implements OnInit {
     }
   }
 
+  isBookReadyToExchange(status:string):boolean {
+    return status === 'Ready';
+  }
+
+  getWishlistButtonColor():string {
+    if (!this.isBookInWishlist) {
+      return 'primary';
+    }
+    return 'warn';
+  }
+
 }
