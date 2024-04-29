@@ -7,7 +7,8 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { LibraryService } from '../../services/library/library.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { LibraryComponent } from '../library/library.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { UpdateBookFormComponent } from '../update-book-form/update-book-form.component';
 
 @Component({
   selector: 'app-book-card',
@@ -22,7 +23,12 @@ export class BookCardComponent {
   reponseMessage:any;
   errorMessage = '';
 
-  constructor(private dialog:MatDialog, private libraryService:LibraryService, private snackbarService:SnackbarService, private libraryComponent: LibraryComponent) {}
+  constructor(
+    private dialog:MatDialog, 
+    private libraryService:LibraryService, 
+    private snackbarService:SnackbarService, 
+    private libraryComponent: LibraryComponent,
+    private router:Router) {}
 
   handleDeleteBook(book:any) {
     const dialogConfig = new MatDialogConfig();
@@ -52,6 +58,20 @@ export class BookCardComponent {
         }
         this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
+    });
+  }
+
+  handleUpdateBook(values:any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      data: values
+    }
+    const dialogRef = this.dialog.open(UpdateBookFormComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
+    const sub = dialogRef.componentInstance.onUpdateBook.subscribe((response)=> {
+      this.libraryComponent.getLibraryBooks();
     });
   }
 }

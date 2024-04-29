@@ -16,7 +16,7 @@
         </a>
       </div>
       <div>
-        <button mat-icon-button aria-label="Edit">
+        <button mat-icon-button aria-label="Edit" (click)="handleUpdateBook(book)">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button aria-label="Delete" (click)="handleDeleteBook(book)">

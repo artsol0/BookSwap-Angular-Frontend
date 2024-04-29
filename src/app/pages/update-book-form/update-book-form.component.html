@@ -1,0 +1,106 @@
+<form [formGroup]="updatePhotoForm" (ngSubmit)="handleUpdateBookPhoto()" enctype="multipart/form-data" class="w-full sm:w-[27rem] p-6 rounded-lg shadow-md">
+    <div class="flex items-center justify-content mb-2">
+        <button mat-icon-button matPrefix color="primary" type="reset" (click)="f_input.click()">
+            <mat-icon>attach_file</mat-icon>
+        </button>
+        {{fileName || "No file uploaded yet."}}
+        <input 
+            type="file"
+            required
+            hidden
+            #f_input
+            formControlName="photo"
+            (change)="handleFileSelected($event)"
+            class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+        />
+    </div>
+    <div>
+        <mat-dialog-actions>
+            <button mat-raised-button [mat-dialog-close]="true" color="primary" type="submit" [disabled]="!(updatePhotoForm.valid && updatePhotoForm.dirty)">Update</button>
+        </mat-dialog-actions>
+    </div>
+</form>
+<form [formGroup]="updateBookDataForm" (ngSubmit)="handleUpdateBookData()" class="w-full sm:w-[27rem] p-6 rounded-lg shadow-md">
+    <div class="mb-2">
+        <mat-form-field class="w-full">
+            <mat-label class="text-gray-400">Titile</mat-label>
+            <input 
+                required
+                matInput
+                formControlName="title"
+                class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+            />
+        </mat-form-field>
+    </div>
+    <div class="mb-2">
+        <mat-form-field class="w-full">
+            <mat-label class="text-gray-400">Author</mat-label>
+            <input 
+                required
+                matInput
+                formControlName="author"
+                class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
+            />
+        </mat-form-field>
+    </div>
+    <div class="mb-2">
+        <mat-form-field class="w-full">
+            <mat-label class="text-gray-400">Description</mat-label>
+            <textarea 
+                matInput 
+                formControlName="description"
+                placeholder="It's about...">
+            </textarea>
+        </mat-form-field>
+    </div>
+    <div class="mb-2">
+        <mat-form-field class="w-full">
+            <mat-label class="text-gray-400">Genres</mat-label>
+            <mat-select formControlName="genres" [value]="selectedGenres" multiple>
+            <mat-option *ngFor="let genre of genres" [value]="genre.id">
+                {{ genre.genre }}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="mb-2">
+        <mat-form-field class="w-full">
+            <mat-label class="text-gray-400">Language</mat-label>
+            <mat-select formControlName="language">
+            <mat-option *ngFor="let language of languages" [value]="language.id">
+                {{ language.language }}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="mb-2">
+        <mat-form-field class="w-full">
+            <mat-label class="text-gray-400">Quality</mat-label>
+            <mat-select formControlName="quality">
+            <mat-option *ngFor="let quality of qualities" [value]="quality.id">
+                {{ quality.quality }}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="mb-2">
+        <mat-form-field class="w-full">
+            <mat-label class="text-gray-400">Status</mat-label>
+            <mat-select formControlName="status">
+                <mat-option *ngFor="let status of statuses" [value]="status.id">
+                    {{ status.status }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-dialog-actions>
+            <button mat-raised-button [mat-dialog-close]="true" color="primary" type="submit" [disabled]="!(updateBookDataForm.valid && updateBookDataForm.dirty)">Update</button>
+        </mat-dialog-actions>
+    </div>
+</form>
+<div class="flex justify-end">
+    <mat-dialog-actions>
+        <button mat-raised-button cdkFocusInitial mat-dialog-close color="primary">Cancel</button>
+    </mat-dialog-actions>
+</div>
