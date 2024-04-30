@@ -25,6 +25,20 @@ export class LibraryService {
     return this.http.post(this.baseUrl + "/api/v1/book/add", formData, {headers});
   }
 
+  updateBook(id:number, formData:FormData) {
+    const headers = new HttpHeaders({
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    });
+    return this.http.put(this.baseUrl + "/api/v1/book/update/" + id, formData, {headers});
+  }
+
+  updateBookPhoto(id:number, formData:FormData) {
+    const headers = new HttpHeaders({
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    });
+    return this.http.put(this.baseUrl + "/api/v1/book/change-photo/" + id, formData, {headers});
+  }
+
   deleteBook(id:any) {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`

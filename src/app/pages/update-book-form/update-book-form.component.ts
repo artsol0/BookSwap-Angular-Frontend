@@ -8,8 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { BookService } from '../../services/book/book.service';
 import { BookAttributesService } from '../../services/attributes/book-attributes.service';
+import { LibraryService } from '../../services/library/library.service';
 
 @Component({
   selector: 'app-update-book-form',
@@ -38,7 +38,7 @@ export class UpdateBookFormComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: any, 
-    private bookService: BookService, 
+    private libraryService: LibraryService, 
     private attributesService:BookAttributesService,
     private formBuilder: FormBuilder,
     private snackbarService: SnackbarService,
@@ -163,6 +163,23 @@ export class UpdateBookFormComponent implements OnInit {
   handleUpdateBookPhoto() {
     const formData: FormData = new FormData();
     formData.append('photo', this.file);
+    this.libraryService.updateBookPhoto(this.dialogData.data.id, formData).subscribe({
+      next: (response: any) => {
+        this.dialogRef.close;
+        this.onUpdateBook.emit();
+        this.reponseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.reponseMessage, "");
+      },
+      error: (error: any) => {
+        this.dialogRef.close;
+        if (error.error?.error.message) {
+          this.reponseMessage = error.error?.error.message;
+        } else {
+          this.reponseMessage = "Unexpected error occurred";
+        }
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+      }
+    });
   }
 
   handleUpdateBookData() {
@@ -174,5 +191,22 @@ export class UpdateBookFormComponent implements OnInit {
     formData.append('qualityId', this.updateBookDataForm.value.quality ?? '');
     formData.append('statusId', this.updateBookDataForm.value.status ?? '');
     formData.append('languageId', this.updateBookDataForm.value.language ?? '');
+    this.libraryService.updateBook(this.dialogData.data.id, formData).subscribe({
+      next: (response: any) => {
+        this.dialogRef.close;
+        this.onUpdateBook.emit();
+        this.reponseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.reponseMessage, "");
+      },
+      error: (error: any) => {
+        this.dialogRef.close;
+        if (error.error?.error.message) {
+          this.reponseMessage = error.error?.error.message;
+        } else {
+          this.reponseMessage = "Unexpected error occurred";
+        }
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+      }
+    });
   }
 }
