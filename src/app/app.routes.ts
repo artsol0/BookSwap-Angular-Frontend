@@ -9,6 +9,7 @@ import { BookLocationHistoryComponent } from './pages/book-location-history/book
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { ExchangesComponent } from './pages/exchanges/exchanges.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ChatComponent } from './pages/chat/chat.component';
 
 export const routes: Routes = [
     {
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'library', component: LibraryComponent },
     { path: 'wishlist', component: WishlistComponent },
     { path: 'exchanges', component: ExchangesComponent },
+    { path: 'chatting', component: ChatComponent },
     { path: 'profile', component: UserProfileComponent },
     { path: 'user/:id/profile', component: UserProfileComponent },
     { path: 'book/:id', component: BookOverviewComponent },

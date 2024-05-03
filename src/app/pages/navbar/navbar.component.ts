@@ -39,6 +39,10 @@ export class NavbarComponent {
     this.router.navigate(['/exchanges']);
   }
 
+  goToChattingPage() {
+    this.router.navigate(['/chatting']);
+  }
+
   goToProfilePage() {
     this.router.navigate(['/profile'])
   }
