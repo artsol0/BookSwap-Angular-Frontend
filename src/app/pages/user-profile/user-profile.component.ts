@@ -9,6 +9,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UpdateProfileFormComponent } from '../update-profile-form/update-profile-form.component';
 import { ResetPasswordFromComponent } from '../reset-password-from/reset-password-from.component';
 import { UserService } from '../../services/user/user.service';
+import { SendMessageFormComponent } from '../send-message-form/send-message-form.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -118,8 +119,13 @@ export class UserProfileComponent implements OnInit {
     this.dialog.open(ResetPasswordFromComponent)
   }
 
-  handleWriteMessage(id:string) {
-    console.log(id);
+  handleWriteMessage() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      userId: this.currentUserId,
+      receiverId: this.user.id
+    }
+    const dialogRef = this.dialog.open(SendMessageFormComponent, dialogConfig);
   }
 
   setSentiment():string {

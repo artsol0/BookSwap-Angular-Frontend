@@ -92,4 +92,18 @@ export class ChatService {
     );
   }
 
+  sendGreetingMessage(senderId:number, receiverId:number, content:string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    });
+    const message = JSON.stringify({
+      content: content,
+      timestamp: new Date(),
+      sender_id: senderId,
+      receiver_id: receiverId
+    });
+    return this.http.post(this.baseUrl + "/add/message", message, {headers});
+  }
+
 }

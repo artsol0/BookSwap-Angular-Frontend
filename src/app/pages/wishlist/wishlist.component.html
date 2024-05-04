@@ -1,5 +1,5 @@
 <div class="pb-5 pt-5">
-    <div class="flex justify-center flex-wrap gap-5">
+    <div class="flex min-h-[80vh] justify-center flex-wrap gap-5">
         <mat-card class="card" *ngFor="let book of books; trackBy: trackById">
             <mat-card-header class="mb-2">
                 <mat-card-title>{{book.title}}</mat-card-title>
@@ -25,7 +25,7 @@
                 </div>
               </mat-card-actions>
         </mat-card>
-        <div *ngIf="books.length === 0" class="min-h-[80vh]">
+        <div *ngIf="books.length === 0">
             <h3>There are no books in the wishlist</h3>
         </div>
     </div>

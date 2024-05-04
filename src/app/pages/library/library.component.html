@@ -1,10 +1,10 @@
 <div class="pb-5 pt-5">
-    <div class="flex justify-center flex-wrap gap-5">
+    <div class="flex min-h-[80vh] justify-center flex-wrap gap-5">
         @for(item of books; track 1) {
             <app-book-card [book]="item"></app-book-card>
         }
         @empty {
-            <div class="min-h-[80vh]"><h3>There are no books in the library</h3></div>
+            <div><h3>There are no books in the library</h3></div>
         }
     </div>
 

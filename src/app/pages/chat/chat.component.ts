@@ -54,7 +54,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.getCurrentUserDataAndConnect();
       this.getAllUserChats();
       this.messageForm = new FormGroup({
-        message: new FormControl("",[Validators.required])
+        message: new FormControl("",[Validators.required, Validators.maxLength(500)])
       });
     } else {
       this.router.navigate(['/auth']);

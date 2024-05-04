@@ -97,7 +97,7 @@ export class AddBookFormComponent implements OnInit {
   addBookForm = new FormGroup({
     title: new FormControl("", [Validators.required]),
     author: new FormControl("", [Validators.required]),
-    description: new FormControl("", [Validators.required]),
+    description: new FormControl("", [Validators.required, Validators.maxLength(1000)]),
     genres: new FormControl("", [Validators.required]),
     language: new FormControl("", [Validators.required]),
     quality: new FormControl("", [Validators.required]),
