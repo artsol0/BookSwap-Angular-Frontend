@@ -19,7 +19,10 @@ import { AddBookFormComponent } from '../add-book-form/add-book-form.component';
 })
 export class LibraryComponent implements OnInit {
 
-  books = [];
+  books:any = [];
+  page:number = 0;
+  totalBooks = 0;
+  totalPages = 0;
   reponseMessage:any;
   errorMessage = '';
 
@@ -32,9 +35,11 @@ export class LibraryComponent implements OnInit {
   }
 
   getLibraryBooks() {
-    this.libraryService.getLibraryBooks().subscribe({
+    this.libraryService.getLibraryBooks(this.page).subscribe({
       next: data => {
-        this.books = data.data;
+        this.books = [...this.books, ...data.data.content];
+        this.totalBooks = data.data.totalElements;
+        this.totalPages = data.data.totalPages - 1;
       },
       error: (error: any) => {
        if (error.error?.error.message) {
@@ -63,5 +68,10 @@ export class LibraryComponent implements OnInit {
     const sub = dialogRef.componentInstance.onAddBook.subscribe((response)=> {
       this.getLibraryBooks();
     });
+  }
+
+  loadMoreBooks() {
+    this.page++;
+    this.getLibraryBooks();
   }
 }

@@ -11,11 +11,11 @@ export class LibraryService {
 
   constructor(private http:HttpClient) { }
 
-  getLibraryBooks():Observable<any> {
+  getLibraryBooks(page:number):Observable<any> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
     });
-    return this.http.get<any>(`${this.baseUrl}/api/v1/library/get-books`, {headers});
+    return this.http.get<any>(`${this.baseUrl}/api/v1/book/get/by/user?page=` + page, {headers});
   }
 
   addNewBook(formData: FormData) {
