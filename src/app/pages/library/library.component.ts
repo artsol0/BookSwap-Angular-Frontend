@@ -66,6 +66,7 @@ export class LibraryComponent implements OnInit {
       dialogRef.close();
     });
     const sub = dialogRef.componentInstance.onAddBook.subscribe((response)=> {
+      this.books = [];
       this.getLibraryBooks();
     });
   }

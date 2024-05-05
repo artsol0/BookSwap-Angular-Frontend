@@ -44,10 +44,12 @@ export class BookCardComponent {
   }
 
   deleteBook(id:any) {
+    this.libraryComponent.books = [];
     this.libraryService.deleteBook(id).subscribe({
       next: (response: any) => {
         this.reponseMessage = response?.message;
         this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.libraryComponent.books = [];
         this.libraryComponent.getLibraryBooks();
       },
       error: (error: any) => {
@@ -71,6 +73,7 @@ export class BookCardComponent {
       dialogRef.close();
     });
     const sub = dialogRef.componentInstance.onUpdateBook.subscribe((response)=> {
+      this.libraryComponent.books = [];
       this.libraryComponent.getLibraryBooks();
     });
   }
