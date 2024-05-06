@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
@@ -12,7 +13,7 @@ import { UserService } from '../../services/user/user.service';
 @Component({
   selector: 'app-update-profile-form',
   standalone: true,
-  imports: [CommonModule, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatDialogModule],
+  imports: [CommonModule, MatInputModule, MatFormFieldModule, MatIconModule, MatSelectModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatDialogModule],
   templateUrl: './update-profile-form.component.html',
   styleUrl: './update-profile-form.component.scss'
 })
@@ -21,6 +22,9 @@ export class UpdateProfileFormComponent implements OnInit {
   errorMessage = '';
   fileName = '';
   file!: File;
+
+  countries: { id: number, name: string , iso2: string } [] = [];
+  cities: { id: number, name: string }[] = [];
 
   onUpdateProfile = new EventEmitter();
 
@@ -44,11 +48,50 @@ export class UpdateProfileFormComponent implements OnInit {
       city: new FormControl("",[Validators.required])
     });
     this.updateLocationForm.patchValue(this.dialogData.data);
+    this.getCountriesData();
+  }
+
+  getCountriesData() {
+    this.userService.getAllCountries().subscribe({
+      next: (response: any) => {
+        this.countries = response.data;
+      },
+      error: (error: any) => {
+        this.dialogRef.close;
+        if (error.error?.error.message) {
+          this.reponseMessage = error.error?.error.message;
+        } else {
+          this.reponseMessage = "Unexpected error occurred";
+        }
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+      }
+    });
+  }
+
+  getCitiesData() {
+    this.userService.getCitiesByCountry(this.updateLocationForm.value.country.iso2).subscribe({
+      next: (response: any) => {
+        this.cities = response.data;
+      },
+      error: (error: any) => {
+        this.dialogRef.close;
+        if (error.error?.error.message) {
+          this.reponseMessage = error.error?.error.message;
+        } else {
+          this.reponseMessage = "Unexpected error occurred";
+        }
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+      }
+    });
   }
 
   handleLocationUpdating() {
     if (this.updateLocationForm.valid && this.updateLocationForm.dirty) {
-      this.userService.updateLocation(this.updateLocationForm.value).subscribe({
+      const location = JSON.stringify({
+        country: this.updateLocationForm.value.country.name,
+        city: this.updateLocationForm.value.city
+      })
+      this.userService.updateLocation(location).subscribe({
         next: (response: any) => {
           this.dialogRef.close;
           this.onUpdateProfile.emit();

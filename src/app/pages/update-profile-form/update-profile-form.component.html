@@ -23,30 +23,22 @@
 <form [formGroup]="updateLocationForm" (ngSubmit)="handleLocationUpdating()" class="w-full sm:w-[27rem] p-6 rounded-lg shadow-md">
     <div class="mb-2">
         <mat-form-field class="w-full">
-            <mat-label class="text-gray-400">Contry</mat-label>
-            <input 
-                required
-                matInput
-                formControlName="country"
-                class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
-            />
-            <mat-error *ngIf="updateLocationForm.controls.country.touched && updateLocationForm.controls.country.invalid">
-                <span *ngIf="updateLocationForm.controls.country.hasError('required')">The field is mandatory</span>
-            </mat-error>
+            <mat-label class="text-gray-400">Country</mat-label>
+            <mat-select formControlName="country" (selectionChange)="getCitiesData()">
+            <mat-option *ngFor="let country of countries" [value]="country">
+                {{ country.name }}
+            </mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
     <div class="mb-2">
         <mat-form-field class="w-full">
             <mat-label class="text-gray-400">City</mat-label>
-            <input 
-                required
-                matInput
-                formControlName="city"
-                class="py-2 px-3 text-gray-200 mt-1 focus:shadow-outline"
-            />
-            <mat-error *ngIf="updateLocationForm.controls.city.touched && updateLocationForm.controls.city.invalid">
-                <span *ngIf="updateLocationForm.controls.city.hasError('required')">The field is mandatory</span>
-            </mat-error>
+            <mat-select formControlName="city">
+            <mat-option *ngFor="let city of cities" [value]="city.name">
+                {{ city.name }}
+            </mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
     <div>

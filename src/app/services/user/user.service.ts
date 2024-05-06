@@ -35,6 +35,14 @@ export class UserService {
     return this.http.put(this.baseUrl + "/api/v1/user/change-location", locationData, {headers});
   }
 
+  getAllCountries(): Observable<any> {
+    return this.http.get(this.baseUrl + "/api/v1/location/get/countries");
+  }
+
+  getCitiesByCountry(iso2:string) {
+    return this.http.get(this.baseUrl + "/api/v1/location/get/countries/" + iso2 + "/cities");
+  }
+
   updatePhoto(formData: FormData) {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
