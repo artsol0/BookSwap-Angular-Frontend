@@ -43,6 +43,7 @@ export class ChatService {
           const parsedMessage = JSON.parse(message.body);
           if (parsedMessage.chatId === that.chatId) {
             that.chatComponent?.messages.push(parsedMessage);
+            that.chatComponent?.scrollToBottom();
           }
         }
       });

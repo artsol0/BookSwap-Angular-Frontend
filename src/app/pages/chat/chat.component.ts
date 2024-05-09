@@ -93,6 +93,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.messages.push(message);
     this.messageForm.reset();
     this.messageForm.controls.message.setErrors(null);
+    this.scrollToBottom();
   }
 
   getCurrentUserDataAndConnect() {

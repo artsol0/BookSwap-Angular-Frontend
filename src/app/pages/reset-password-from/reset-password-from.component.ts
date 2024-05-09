@@ -24,9 +24,9 @@ export class ResetPasswordFromComponent {
   constructor(private userService: UserService, private snackbarService: SnackbarService) {}
 
   changePasswordForm = new FormGroup({
-    current_password: new FormControl("",[Validators.required]),
-    new_password: new FormControl("",[Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).*$')]),
-    confirm_password: new FormControl("",[Validators.required]),
+    currentPassword: new FormControl("",[Validators.required]),
+    newPassword: new FormControl("",[Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).*$')]),
+    confirmPassword: new FormControl("",[Validators.required]),
   });
 
   handlePasswordChange() {
@@ -60,8 +60,8 @@ export class ResetPasswordFromComponent {
   }
 
   passwordsAreMatch():boolean {
-    const new_password = this.changePasswordForm.get('new_password')!.value;
-    const confirm_password = this.changePasswordForm.get('confirm_password')!.value;
-    return new_password === confirm_password;
+    const newPassword = this.changePasswordForm.get('newPassword')!.value;
+    const confirmPassword = this.changePasswordForm.get('confirmPassword')!.value;
+    return newPassword === confirmPassword;
   }
 }
