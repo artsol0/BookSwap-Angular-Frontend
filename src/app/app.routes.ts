@@ -10,6 +10,7 @@ import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { ExchangesComponent } from './pages/exchanges/exchanges.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ChatComponent } from './pages/chat/chat.component';
+import { NewPasswordFormComponent } from './pages/new-password-form/new-password-form.component';
 
 export const routes: Routes = [
     {
@@ -28,5 +29,6 @@ export const routes: Routes = [
     { path: 'user/:id/profile', component: UserProfileComponent },
     { path: 'book/:id', component: BookOverviewComponent },
     { path: 'book/:id/location', component: BookLocationHistoryComponent },
+    { path: 'new-password', component: NewPasswordFormComponent },
     { path: '**', component: PageNotFoundComponent }
 ];

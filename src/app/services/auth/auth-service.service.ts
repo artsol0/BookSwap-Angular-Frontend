@@ -28,10 +28,14 @@ export class AuthServiceService {
     })
   }
 
-  forgotPassword(userData:any) {
-    return this.http.post(this.baseUrl + "/api/v1/forgot-password", userData, {
+  forgotPassword(email:string) {
+    return this.http.post(this.baseUrl + "/api/v1/forgot-password?email=" + email, null, {
       headers:new HttpHeaders().set('Content-Type','application/json')
     })
+  }
+
+  isTokenExpire(token:string) {
+    return this.http.get<any>(this.baseUrl + "/api/v1/forgot-password/check-token?token=" + token);
   }
 
   isAuthenticated():boolean {
@@ -53,6 +57,12 @@ export class AuthServiceService {
         this.authSubject.next({...curentState, user})
       })
     )
+  }
+
+  resetPassword(newPassword:any, token:string) {
+    return this.http.put<any>(this.baseUrl + "/api/v1/forgot-password/reset-password?token=" + token, newPassword, {
+      headers:new HttpHeaders().set('Content-Type','application/json')
+    });
   }
 
   logout() {

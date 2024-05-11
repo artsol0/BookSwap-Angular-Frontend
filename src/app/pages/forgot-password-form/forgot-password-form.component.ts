@@ -28,9 +28,8 @@ export class ForgotPasswordFormComponent {
   })
 
   handlePasswordForgot() {
-    console.log("email ", this.forgotPasswordForm.value);
     if (this.forgotPasswordForm.valid && this.forgotPasswordForm.dirty) {
-      this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe({
+      this.authService.forgotPassword(this.forgotPasswordForm.value.email!).subscribe({
         next: (response: any) => {
           this.reponseMessage = response?.message;
           this.snackbarService.openSnackBar(this.reponseMessage, "");
