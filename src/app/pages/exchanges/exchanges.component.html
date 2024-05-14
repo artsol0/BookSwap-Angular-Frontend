@@ -73,7 +73,7 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
                 <td mat-cell *matCellDef="let element" class="flex flex-col"> 
-                    <button mat-flat-button color="primary" class="max-w-[100px] m-1" (click)="handleConfirmExchange(element.id)">Confirm</button>
+                    <button *ngIf="!element.confirmed" mat-flat-button color="primary" class="max-w-[100px] m-1" (click)="handleConfirmExchange(element.id)">Confirm</button>
                     <button mat-flat-button color="warn" class="max-w-[100px] m-1" (click)="handleDeleteExchange(element.id)">Delete</button>
                 </td>
             </ng-container>

@@ -41,9 +41,8 @@ export class AddReviewFormComponent implements OnInit {
     this.reviewService.addReview(Number(this.details.bookId), this.addReviewForm.value).subscribe({
       next: (response: any) => {
         this.dialogRef.close;
-        this.onAddReview.emit();
-        this.reponseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.onAddReview.emit(response);
+        this.snackbarService.openSnackBar("Review was added successfully", "");
       },
       error: (error: any) => {
         this.dialogRef.close;

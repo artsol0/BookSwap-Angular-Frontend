@@ -33,7 +33,11 @@ export class AddBookFormComponent implements OnInit {
 
   selectedGenres:number[] = [];
 
-  constructor(private attributesService:BookAttributesService, private snackbarService:SnackbarService, private libraryService:LibraryService, private dialogRef: MatDialogRef<AddBookFormComponent>) {
+  constructor(
+    private attributesService:BookAttributesService, 
+    private snackbarService:SnackbarService, 
+    private libraryService:LibraryService, 
+    private dialogRef: MatDialogRef<AddBookFormComponent>) {
   }
 
   ngOnInit(): void {
@@ -129,9 +133,8 @@ export class AddBookFormComponent implements OnInit {
     this.libraryService.addNewBook(formData).subscribe({
       next: (response: any) => {
         this.dialogRef.close;
-        this.onAddBook.emit();
-        this.reponseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.onAddBook.emit(response);
+        this.snackbarService.openSnackBar("Book was added successfully", "");
       },
       error: (error: any) => {
         this.dialogRef.close;

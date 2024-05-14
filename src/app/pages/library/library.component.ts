@@ -65,9 +65,8 @@ export class LibraryComponent implements OnInit {
     this.router.events.subscribe(() => {
       dialogRef.close();
     });
-    const sub = dialogRef.componentInstance.onAddBook.subscribe((response)=> {
-      this.books = [];
-      this.getLibraryBooks();
+    const sub = dialogRef.componentInstance.onAddBook.subscribe((response) => {
+      this.books.push(response.data);
     });
   }
 

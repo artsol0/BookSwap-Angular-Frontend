@@ -110,8 +110,7 @@ export class BookReviewsComponent implements OnInit {
       dialogRef.close();
     });
     const sub = dialogRef.componentInstance.onAddReview.subscribe((response)=> {
-      this.reviews = [];
-      this.getReviewsData(Number(this.route.snapshot.paramMap.get('id')));
+      this.reviews.push(response.data);
       this.reviewExist = true;
     });
   }
