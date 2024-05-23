@@ -9,6 +9,9 @@ import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { LibraryComponent } from '../library/library.component';
 import { Router, RouterModule } from '@angular/router';
 import { UpdateBookFormComponent } from '../update-book-form/update-book-form.component';
+import { Book } from '../../models/book';
+import { MessageResponse } from '../../models/reponses/MessageResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-book-card',
@@ -18,10 +21,8 @@ import { UpdateBookFormComponent } from '../update-book-form/update-book-form.co
   styleUrl: './book-card.component.scss'
 })
 export class BookCardComponent {
-  @Input() book:any
-
-  reponseMessage:any;
-  errorMessage = '';
+  @Input() book!:Book
+  reponseMessage:string = '';
 
   constructor(
     private dialog:MatDialog, 
@@ -46,15 +47,15 @@ export class BookCardComponent {
   deleteBook(id:any) {
     this.libraryComponent.books = [];
     this.libraryService.deleteBook(id).subscribe({
-      next: (response: any) => {
-        this.reponseMessage = response?.message;
+      next: (response: MessageResponse) => {
+        this.reponseMessage = response.message;
         this.snackbarService.openSnackBar(this.reponseMessage, "");
         this.libraryComponent.books = [];
         this.libraryComponent.getLibraryBooks();
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }

@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
+import { MessageResponse } from '../../models/reponses/MessageResponse';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { Exchange } from '../../models/exchange';
 
 @Injectable({
   providedIn: 'root'
@@ -11,38 +14,38 @@ export class ExchangeService {
 
   constructor(private http:HttpClient) { }
 
-  createNewExchange(bookId:number) {
+  createNewExchange(bookId:number):Observable<MessageResponse> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
     }).set('Content-Type','application/json');
-    return this.http.post(this.baseUrl + "/api/v1/exchange/create/" + bookId, null, {headers});
+    return this.http.post<MessageResponse>(this.baseUrl + "/api/v1/exchange/create/" + bookId, null, {headers});
   }
 
-  getAllInitiateExchanges() {
+  getAllInitiateExchanges():Observable<SuccessResponse<Exchange[]>> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
     }).set('Content-Type','application/json');
-    return this.http.get<any>(this.baseUrl + "/api/v1/exchange/get/initiation", {headers});
+    return this.http.get<SuccessResponse<Exchange[]>>(this.baseUrl + "/api/v1/exchange/get/initiation", {headers});
   }
 
-  getAllRecipientExchanges() {
+  getAllRecipientExchanges():Observable<SuccessResponse<Exchange[]>> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
     }).set('Content-Type','application/json');
-    return this.http.get<any>(this.baseUrl + "/api/v1/exchange/get/recipient", {headers});
+    return this.http.get<SuccessResponse<Exchange[]>>(this.baseUrl + "/api/v1/exchange/get/recipient", {headers});
   }
 
-  confirmExchange(exchangeId:number) {
+  confirmExchange(exchangeId:number):Observable<MessageResponse> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
     }).set('Content-Type','application/json');
-    return this.http.put(this.baseUrl + "/api/v1/exchange/confirm/" + exchangeId, null, {headers});
+    return this.http.put<MessageResponse>(this.baseUrl + "/api/v1/exchange/confirm/" + exchangeId, null, {headers});
   }
 
-  deleteExchange(exchangeId:number) {
+  deleteExchange(exchangeId:number):Observable<MessageResponse> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
     }).set('Content-Type','application/json');
-    return this.http.delete(this.baseUrl + "/api/v1/exchange/delete/" + exchangeId, {headers})
+    return this.http.delete<MessageResponse>(this.baseUrl + "/api/v1/exchange/delete/" + exchangeId, {headers})
   }
 }

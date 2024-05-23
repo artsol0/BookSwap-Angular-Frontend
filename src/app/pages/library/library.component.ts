@@ -9,6 +9,10 @@ import { LibraryService } from '../../services/library/library.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddBookFormComponent } from '../add-book-form/add-book-form.component';
+import { Book } from '../../models/book';
+import { Page } from '../../models/pageable/page';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-library',
@@ -19,12 +23,11 @@ import { AddBookFormComponent } from '../add-book-form/add-book-form.component';
 })
 export class LibraryComponent implements OnInit {
 
-  books:any = [];
+  books: Book[] = [];
   page:number = 0;
   totalBooks = 0;
   totalPages = 0;
-  reponseMessage:any;
-  errorMessage = '';
+  reponseMessage:string = '';
 
   ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
@@ -36,14 +39,14 @@ export class LibraryComponent implements OnInit {
 
   getLibraryBooks() {
     this.libraryService.getLibraryBooks(this.page).subscribe({
-      next: data => {
-        this.books = [...this.books, ...data.data.content];
-        this.totalBooks = data.data.totalElements;
-        this.totalPages = data.data.totalPages - 1;
+      next: (response: SuccessResponse<Page<Book>>) => {
+        this.books = [...this.books, ...response.data.content];
+        this.totalBooks = response.data.totalElements;
+        this.totalPages = response.data.totalPages - 1;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -65,8 +68,8 @@ export class LibraryComponent implements OnInit {
     this.router.events.subscribe(() => {
       dialogRef.close();
     });
-    const sub = dialogRef.componentInstance.onAddBook.subscribe((response) => {
-      this.books.push(response.data);
+    const sub = dialogRef.componentInstance.onAddBook.subscribe((response: Book) => {
+      this.books.push(response);
     });
   }
 

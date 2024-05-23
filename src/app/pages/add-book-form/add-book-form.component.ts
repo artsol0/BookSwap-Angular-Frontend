@@ -10,6 +10,9 @@ import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { BookAttributesService } from '../../services/attributes/book-attributes.service';
 import { LibraryService } from '../../services/library/library.service';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { Book } from '../../models/book';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-add-book-form',
@@ -19,8 +22,7 @@ import { LibraryService } from '../../services/library/library.service';
   styleUrl: './add-book-form.component.scss'
 })
 export class AddBookFormComponent implements OnInit {
-  reponseMessage:any;
-  errorMessage = '';
+  reponseMessage:string = '';
   fileName = '';
   file!: File;
 
@@ -99,8 +101,8 @@ export class AddBookFormComponent implements OnInit {
   }
 
   addBookForm = new FormGroup({
-    title: new FormControl("", [Validators.required]),
-    author: new FormControl("", [Validators.required]),
+    title: new FormControl("", [Validators.required, Validators.maxLength(50)]),
+    author: new FormControl("", [Validators.required, Validators.maxLength(50)]),
     description: new FormControl("", [Validators.required, Validators.maxLength(1000)]),
     genres: new FormControl("", [Validators.required]),
     language: new FormControl("", [Validators.required]),
@@ -131,15 +133,15 @@ export class AddBookFormComponent implements OnInit {
     formData.append('photo', this.file);
 
     this.libraryService.addNewBook(formData).subscribe({
-      next: (response: any) => {
+      next: (response: SuccessResponse<Book>) => {
         this.dialogRef.close;
-        this.onAddBook.emit(response);
+        this.onAddBook.emit(response.data);
         this.snackbarService.openSnackBar("Book was added successfully", "");
       },
-      error: (error: any) => {
+      error: (error: ErrorResponse) => {
         this.dialogRef.close;
-        if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+        if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }

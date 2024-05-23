@@ -14,6 +14,10 @@ import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { BookService } from '../../services/book/book.service';
 import { BookAttributesService } from '../../services/attributes/book-attributes.service';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { Book } from '../../models/book';
+import { Page } from '../../models/pageable/page';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-search',
@@ -24,15 +28,14 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class SearchComponent implements OnInit {
 
-  books:any = [];
+  books: Book[] = [];
   page:number = 0;
   pageEvent: PageEvent = new PageEvent;
   totalBooks = 0;
   totalPages = 0;
   pageSize = 0;
 
-  errorMessage = '';
-  reponseMessage:any;
+  reponseMessage:string = '';
 
   mobileQuery: MediaQueryList;
   _mobileQueryListener: () => void;
@@ -126,19 +129,19 @@ export class SearchComponent implements OnInit {
 
   getAllBooks(page:number, keyword:string) {
     this.bookService.getAllBooks(page, keyword).subscribe({
-      next: data => {
-        this.books = data.data.content;
-        this.totalBooks = data.data.totalElements;
-        this.totalPages = data.data.totalPages;
-        this.pageSize = data.data.pageable.pageSize;
+      next: (response: SuccessResponse<Page<Book>>) => {
+        this.books = response.data.content;
+        this.totalBooks = response.data.totalElements;
+        this.totalPages = response.data.totalPages;
+        this.pageSize = response.data.size;
       },
-      error: (error: any) => {
-        if (error.error?.error.message) {
-           this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+        if (error.error.error.message) {
+           this.reponseMessage = error.error.error.message;
          } else {
-           this.errorMessage = "Unexpected error occurred";
+           this.reponseMessage = "Unexpected error occurred";
          }
-         this.snackbarService.openSnackBar(this.errorMessage, "error");
+         this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
     })
   }
@@ -178,20 +181,20 @@ export class SearchComponent implements OnInit {
 
   getFilteredBook(page:number) {
     this.bookService.getAllBooksByAttributes(page, this.filterBookForm.value).subscribe({
-      next: data => {
-        this.books = data.data.content;
-        this.totalBooks = data.data.totalElements;
-        this.totalPages = data.data.totalPages;
-        this.pageSize = data.data.pageable.pageSize;
+      next: (response: SuccessResponse<Page<Book>>) => {
+        this.books = response.data.content;
+        this.totalBooks = response.data.totalElements;
+        this.totalPages = response.data.totalPages;
+        this.pageSize = response.data.size;
         this.paginator.firstPage();
       },
-      error: (error: any) => {
-        if (error.error?.error.message) {
-           this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+        if (error.error.error.message) {
+           this.reponseMessage = error.error.error.message;
          } else {
-           this.errorMessage = "Unexpected error occurred";
+           this.reponseMessage= "Unexpected error occurred";
          }
-         this.snackbarService.openSnackBar(this.errorMessage, "error");
+         this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
     });
   }

@@ -8,6 +8,8 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthServiceService } from '../../services/auth/auth-service.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MessageResponse } from '../../models/reponses/MessageResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-forgot-password-form',
@@ -17,8 +19,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   styleUrl: './forgot-password-form.component.scss'
 })
 export class ForgotPasswordFormComponent {
-  reponseMessage:any;
-  errorMessage = '';
+  reponseMessage:string = '';
 
   constructor(public authService:AuthServiceService, public snackbarService:SnackbarService, private dialog: MatDialog) {
   }
@@ -30,13 +31,13 @@ export class ForgotPasswordFormComponent {
   handlePasswordForgot() {
     if (this.forgotPasswordForm.valid && this.forgotPasswordForm.dirty) {
       this.authService.forgotPassword(this.forgotPasswordForm.value.email!).subscribe({
-        next: (response: any) => {
-          this.reponseMessage = response?.message;
+        next: (response: MessageResponse) => {
+          this.reponseMessage = response.message;
           this.snackbarService.openSnackBar(this.reponseMessage, "");
         },
-        error: (error: any) => {
-         if (error.error?.error.message) {
-            this.reponseMessage = error.error?.error.message;
+        error: (error: ErrorResponse) => {
+         if (error.error.error.message) {
+            this.reponseMessage = error.error.error.message;
           } else {
             this.reponseMessage = "Unexpected error occurred";
           }

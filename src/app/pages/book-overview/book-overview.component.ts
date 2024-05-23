@@ -10,6 +10,11 @@ import { ExchangeService } from '../../services/exchange/exchange.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { BookReviewsComponent } from '../book-reviews/book-reviews.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Book } from '../../models/book';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { BookAdditionalInfo } from '../../models/bookAddtionalInfo';
+import { MessageResponse } from '../../models/reponses/MessageResponse';
 
 @Component({
   selector: 'app-book-overview',
@@ -20,9 +25,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class BookOverviewComponent implements OnInit {
 
-  book:any = null;
-  errorMessage = '';
-  reponseMessage:any;
+  book!:Book;
+  reponseMessage:string = '';
   userIsAuth:boolean = false;
 
   isUserBookOwner:boolean = false;
@@ -48,20 +52,20 @@ export class BookOverviewComponent implements OnInit {
   }
 
   getBookData(bookId:number) {
-    this.book = this.bookService.getBook(bookId).subscribe({
-      next: data => {
-        this.book = data.data;
+    this.bookService.getBook(bookId).subscribe({
+      next: (response: SuccessResponse<Book>) => {
+        this.book = response.data;
       },
-      error: (error: any) => {
-        if (error.error?.error.code === 404) {
+      error: (error: ErrorResponse) => {
+        if (error.error.error.code === 404) {
           this.router.navigate(['/**'])
         } else {
-          if (error.error?.error.message) {
-            this.errorMessage = error.error?.error.message;
+          if (error.error.error.message) {
+            this.reponseMessage= error.error.error.message;
           } else {
-            this.errorMessage = "Unexpected error occurred";
+            this.reponseMessage = "Unexpected error occurred";
           }
-          this.snackbarService.openSnackBar(this.errorMessage, "error");
+          this.snackbarService.openSnackBar(this.reponseMessage, "error");
         }
        }
     });
@@ -69,18 +73,18 @@ export class BookOverviewComponent implements OnInit {
 
   getBookAdditonalInfo(bookId:number) {
     this.bookService.getBookAdditionalInfo(bookId).subscribe({
-      next: data => {
-        this.isUserBookOwner = data.data.userBookOwner;
-        this.isBookInWishlist = data.data.bookInWishlist;
-        this.isBookInExchange = data.data.bookInExchange;
+      next: (response: SuccessResponse<BookAdditionalInfo>) => {
+        this.isUserBookOwner = response.data.userBookOwner;
+        this.isBookInWishlist = response.data.bookInWishlist;
+        this.isBookInExchange = response.data.bookInExchange;
       },
-      error: (error: any) => {
-        if (error.error?.error.message) {
-           this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+        if (error.error.error.message) {
+           this.reponseMessage = error.error.error.message;
          } else {
-           this.errorMessage = "Unexpected error occurred";
+           this.reponseMessage = "Unexpected error occurred";
          }
-         this.snackbarService.openSnackBar(this.errorMessage, "error");
+         this.snackbarService.openSnackBar(this.reponseMessage, "error");
        }
     })
   }
@@ -89,14 +93,14 @@ export class BookOverviewComponent implements OnInit {
     if (this.userIsAuth) {
       if (!this.isBookInWishlist) {
         this.wishlistService.addBookToWishlist(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
-          next: (response: any) => {
-            this.reponseMessage = response?.message;
+          next: (response: MessageResponse) => {
+            this.reponseMessage = response.message;
             this.isBookInWishlist = true;
             this.snackbarService.openSnackBar(this.reponseMessage, "");
           },
-          error: (error: any) => {
-           if (error.error?.error.message) {
-              this.reponseMessage = error.error?.error.message;
+          error: (error: ErrorResponse) => {
+           if (error.error.error.message) {
+              this.reponseMessage = error.error.error.message;
             } else {
               this.reponseMessage = "Unexpected error occurred";
             }
@@ -105,14 +109,14 @@ export class BookOverviewComponent implements OnInit {
         });
       } else {
         this.wishlistService.removeBookFromWishlist(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
-          next: (response: any) => {
-            this.reponseMessage = response?.message;
+          next: (response: MessageResponse) => {
+            this.reponseMessage = response.message;
             this.isBookInWishlist = false;
             this.snackbarService.openSnackBar(this.reponseMessage, "");
           },
-          error: (error: any) => {
-           if (error.error?.error.message) {
-              this.reponseMessage = error.error?.error.message;
+          error: (error: ErrorResponse) => {
+           if (error.error.error.message) {
+              this.reponseMessage = error.error.error.message;
             } else {
               this.reponseMessage = "Unexpected error occurred";
             }
@@ -128,14 +132,14 @@ export class BookOverviewComponent implements OnInit {
   handleAddEchange() {
     if (this.userIsAuth) {
       this.exchangeService.createNewExchange(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
-        next: (response: any) => {
-          this.reponseMessage = response?.message;
+        next: (response: MessageResponse) => {
+          this.reponseMessage = response.message;
           this.isBookInExchange = true;
           this.snackbarService.openSnackBar(this.reponseMessage, "");
         },
-        error: (error: any) => {
-         if (error.error?.error.message) {
-            this.reponseMessage = error.error?.error.message;
+        error: (error: ErrorResponse) => {
+         if (error.error.error.message) {
+            this.reponseMessage = error.error.error.message;
           } else {
             this.reponseMessage = "Unexpected error occurred";
           }

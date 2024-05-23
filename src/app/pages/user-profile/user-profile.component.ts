@@ -10,6 +10,9 @@ import { UpdateProfileFormComponent } from '../update-profile-form/update-profil
 import { ResetPasswordFromComponent } from '../reset-password-from/reset-password-from.component';
 import { UserService } from '../../services/user/user.service';
 import { SendMessageFormComponent } from '../send-message-form/send-message-form.component';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { User } from '../../models/user';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-user-profile',
@@ -70,12 +73,12 @@ export class UserProfileComponent implements OnInit {
 
   getCurrentUserData() {
     this.user = this.authService.getUserProfile().subscribe({
-      next: data => {
-        this.user = data.data;
+      next: (response: SuccessResponse<User>) => {
+        this.user = response.data;
       },
-      error: (error: any) => {
-        if (error.error?.error.message) {
-           this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+        if (error.error.error.message) {
+           this.reponseMessage = error.error.error.message;
          } else {
            this.reponseMessage = "Unexpected error occurred";
          }

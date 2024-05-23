@@ -10,6 +10,10 @@ import { AuthServiceService } from '../../services/auth/auth-service.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { MessageResponse } from '../../models/reponses/MessageResponse';
+import { Exchange } from '../../models/exchange';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 
 @Component({
   selector: 'app-exchanges',
@@ -20,11 +24,10 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 })
 export class ExchangesComponent implements OnInit {
 
-  initiateExchanges:any = [];
-  recipientExchanges:any = [];
+  initiateExchanges:Exchange[] = [];
+  recipientExchanges:Exchange[] = [];
   displayedColumns: string[] = ['id', 'initiator', 'recipient', 'book', 'confirmed', 'action'];
-  errorMessage = '';
-  reponseMessage:any;
+  reponseMessage:string = '';
 
   constructor (
     private router:Router, 
@@ -45,32 +48,32 @@ export class ExchangesComponent implements OnInit {
 
   getInitiateExchangesData() {
     this.exchangeService.getAllInitiateExchanges().subscribe({
-      next: data => {
-        this.initiateExchanges = data.data;
+      next: (response: SuccessResponse<Exchange[]>) => {
+        this.initiateExchanges = response.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
-          this.errorMessage = "Unexpected error occurred";
+          this.reponseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.errorMessage, "error");
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
     });
   }
 
   getRecipientExchangesData() {
     this.exchangeService.getAllRecipientExchanges().subscribe({
-      next: data => {
-        this.recipientExchanges = data.data;
+      next: (response: SuccessResponse<Exchange[]>) => {
+        this.recipientExchanges = response.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
-          this.errorMessage = "Unexpected error occurred";
+          this.reponseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.errorMessage, "error");
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
     });
   }
@@ -90,18 +93,18 @@ export class ExchangesComponent implements OnInit {
 
   confirmExchange(exchangeId:number) {
     this.exchangeService.confirmExchange(exchangeId).subscribe({
-      next: (response: any) => {
-        this.reponseMessage = response?.message;
+      next: (response: MessageResponse) => {
+        this.reponseMessage = response.message;
         this.getRecipientExchangesData();
         this.snackbarService.openSnackBar(this.reponseMessage, "");
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
-          this.errorMessage = "Unexpected error occurred";
+          this.reponseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.errorMessage, "error");
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
     })
   }
@@ -121,19 +124,19 @@ export class ExchangesComponent implements OnInit {
 
   deleteExchange(exchangeId:number) {
     this.exchangeService.deleteExchange(exchangeId).subscribe({
-      next: (response: any) => {
-        this.reponseMessage = response?.message;
+      next: (response: MessageResponse) => {
+        this.reponseMessage = response.message;
         this.getInitiateExchangesData();
         this.getRecipientExchangesData();
         this.snackbarService.openSnackBar(this.reponseMessage, "");
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
-          this.errorMessage = "Unexpected error occurred";
+          this.reponseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.errorMessage, "error");
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
     })
   }

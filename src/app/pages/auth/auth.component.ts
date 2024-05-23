@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,6 +10,9 @@ import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ForgotPasswordFormComponent } from '../forgot-password-form/forgot-password-form.component';
 import { RouterModule, Router } from '@angular/router';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { ErrorDescription } from '../../models/reponses/ErrorDescription';
+import { MessageResponse } from '../../models/reponses/MessageResponse';
 
 @Component({
   selector: 'app-auth',
@@ -18,13 +21,19 @@ import { RouterModule, Router } from '@angular/router';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {
   isRegister = true;
   hidePassword = true;
   reponseMessage:any;
   errorMessage = '';
 
   constructor(private authService:AuthServiceService, private snackbarService:SnackbarService, private dialog: MatDialog, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/home']);
+    }
   }
 
   registrationForm = new FormGroup({
@@ -42,13 +51,13 @@ export class AuthComponent {
     console.log("register ", this.registrationForm.value);
     if (this.registrationForm.valid && this.registrationForm.dirty) {
       this.authService.register(this.registrationForm.value).subscribe({
-        next: (response: any) => {
-          this.reponseMessage = response?.message;
+        next: (response: MessageResponse) => {
+          this.reponseMessage = response.message;
           this.snackbarService.openSnackBar(this.reponseMessage, "");
         },
-        error: (error: any) => {
-         if (error.error?.error.message) {
-            this.reponseMessage = error.error?.error.message;
+        error: (error: ErrorResponse) => {
+         if (error.error.error.message) {
+            this.reponseMessage = error.error.error.message;
           } else {
             this.reponseMessage = "Unexpected error occurred";
           }
@@ -66,9 +75,9 @@ export class AuthComponent {
           localStorage.setItem('token', response.data.token);
           this.router.navigate(["/home"]);
         },
-        error: (error: any) => {
-          if (error.error?.error.message) {
-             this.reponseMessage = error.error?.error.message;
+        error: (error: ErrorResponse) => {
+          if (error.error.error.message) {
+             this.reponseMessage = error.error.error.message;
           } else {
             this.reponseMessage = "Unexpected error occurred";
           }

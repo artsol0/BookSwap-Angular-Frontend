@@ -4,6 +4,9 @@ import { MatTableModule } from '@angular/material/table';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { BookService } from '../../services/book/book.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
+import { Note } from '../../models/note';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 
 @Component({
@@ -15,7 +18,7 @@ import { SnackbarService } from '../../services/snackbar/snackbar.service';
 })
 export class BookLocationHistoryComponent implements OnInit {
 
-  notes:any = [];
+  notes:Note[] = [];
   displayedColumns: string[] = ['country', 'city', 'date'];
   errorMessage = '';
 
@@ -24,12 +27,12 @@ export class BookLocationHistoryComponent implements OnInit {
   ngOnInit(): void {
     const bookId = Number(this.route.snapshot.paramMap.get('id'));
     this.bookService.getBookNotes(bookId).subscribe({
-      next: data => {
-        this.notes = data.data;
+      next: (reponse: SuccessResponse<Note[]>) => {
+        this.notes = reponse.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.errorMessage = error.error.error.message;
         } else {
           this.errorMessage = "Unexpected error occurred";
         }

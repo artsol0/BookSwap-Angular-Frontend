@@ -10,6 +10,8 @@ import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { BookAttributesService } from '../../services/attributes/book-attributes.service';
 import { LibraryService } from '../../services/library/library.service';
+import { MessageResponse } from '../../models/reponses/MessageResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-update-book-form',
@@ -19,8 +21,7 @@ import { LibraryService } from '../../services/library/library.service';
   styleUrl: './update-book-form.component.scss'
 })
 export class UpdateBookFormComponent implements OnInit {
-  reponseMessage:any;
-  errorMessage = '';
+  reponseMessage:string = '';
   fileName = '';
   file!: File;
 
@@ -164,16 +165,16 @@ export class UpdateBookFormComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('photo', this.file);
     this.libraryService.updateBookPhoto(this.dialogData.data.id, formData).subscribe({
-      next: (response: any) => {
+      next: (response: MessageResponse) => {
         this.dialogRef.close;
         this.onUpdateBook.emit();
-        this.reponseMessage = response?.message;
+        this.reponseMessage = response.message;
         this.snackbarService.openSnackBar(this.reponseMessage, "");
       },
-      error: (error: any) => {
+      error: (error: ErrorResponse) => {
         this.dialogRef.close;
-        if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+        if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -192,16 +193,16 @@ export class UpdateBookFormComponent implements OnInit {
     formData.append('statusId', this.updateBookDataForm.value.status ?? '');
     formData.append('languageId', this.updateBookDataForm.value.language ?? '');
     this.libraryService.updateBook(this.dialogData.data.id, formData).subscribe({
-      next: (response: any) => {
+      next: (response: MessageResponse) => {
         this.dialogRef.close;
         this.onUpdateBook.emit();
-        this.reponseMessage = response?.message;
+        this.reponseMessage = response.message;
         this.snackbarService.openSnackBar(this.reponseMessage, "");
       },
-      error: (error: any) => {
+      error: (error: ErrorResponse) => {
         this.dialogRef.close;
-        if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+        if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }

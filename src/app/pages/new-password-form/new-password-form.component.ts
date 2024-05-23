@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-new-password-form',
@@ -49,9 +50,9 @@ export class NewPasswordFormComponent implements OnInit {
       next: data => {
         this.isTokenExpired = data;
       },
-      error: (error: any) => {
-        if (error.error?.error.message) {
-           this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+        if (error.error.error.message) {
+           this.reponseMessage = error.error.error.message;
          } else {
            this.reponseMessage = "Unexpected error occurred";
          }

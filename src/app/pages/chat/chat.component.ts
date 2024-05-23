@@ -12,6 +12,9 @@ import { UserService } from '../../services/user/user.service';
 import { AuthServiceService } from '../../services/auth/auth-service.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { User } from '../../models/user';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-chat',
@@ -98,13 +101,13 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   getCurrentUserDataAndConnect() {
     this.user = this.authService.getUserProfile().subscribe({
-      next: data => {
-        this.user = data.data;
+      next: (response: SuccessResponse<User>) => {
+        this.user = response.data;
         this.chatService.connect(this.user.nickname);
       },
-      error: (error: any) => {
-      if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+      if (error.error.error.message) {
+          this.errorMessage = error.error.error.message;
         } else {
           this.errorMessage = "Unexpected error occurred";
         }
