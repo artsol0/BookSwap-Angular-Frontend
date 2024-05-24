@@ -27,7 +27,7 @@ export class ExchangesComponent implements OnInit {
   initiateExchanges:Exchange[] = [];
   recipientExchanges:Exchange[] = [];
   displayedColumns: string[] = ['id', 'initiator', 'recipient', 'book', 'confirmed', 'action'];
-  reponseMessage:string = '';
+  responseMessage:string = '';
 
   constructor (
     private router:Router, 
@@ -53,11 +53,11 @@ export class ExchangesComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }
@@ -69,11 +69,11 @@ export class ExchangesComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }
@@ -94,17 +94,17 @@ export class ExchangesComponent implements OnInit {
   confirmExchange(exchangeId:number) {
     this.exchangeService.confirmExchange(exchangeId).subscribe({
       next: (response: MessageResponse) => {
-        this.reponseMessage = response.message;
+        this.responseMessage = response.message;
         this.getRecipientExchangesData();
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.snackbarService.openSnackBar(this.responseMessage, "");
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     })
   }
@@ -125,18 +125,18 @@ export class ExchangesComponent implements OnInit {
   deleteExchange(exchangeId:number) {
     this.exchangeService.deleteExchange(exchangeId).subscribe({
       next: (response: MessageResponse) => {
-        this.reponseMessage = response.message;
+        this.responseMessage = response.message;
         this.getInitiateExchangesData();
         this.getRecipientExchangesData();
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.snackbarService.openSnackBar(this.responseMessage, "");
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     })
   }

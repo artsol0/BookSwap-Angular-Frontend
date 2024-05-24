@@ -17,8 +17,7 @@ import { UserService } from '../../services/user/user.service';
   styleUrl: './reset-password-from.component.scss'
 })
 export class ResetPasswordFromComponent {
-  reponseMessage:any;
-  errorMessage = '';
+  responseMessage:string = '';
   hidePassword = true;
 
   constructor(private userService: UserService, private snackbarService: SnackbarService) {}
@@ -32,16 +31,16 @@ export class ResetPasswordFromComponent {
   handlePasswordChange() {
     this.userService.changePussword(this.changePasswordForm.value).subscribe({
       next: (response: any) => {
-        this.reponseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.responseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.responseMessage, "");
       },
       error: (error: any) => {
         if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+          this.responseMessage = error.error?.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }

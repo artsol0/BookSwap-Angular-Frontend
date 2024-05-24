@@ -24,7 +24,7 @@ import { MessageResponse } from '../../models/reponses/MessageResponse';
 export class AuthComponent implements OnInit {
   isRegister = true;
   hidePassword = true;
-  reponseMessage:string = '';
+  responseMessage:string = '';
 
   constructor(private authService:AuthServiceService, private snackbarService:SnackbarService, private dialog: MatDialog, private router: Router) {
   }
@@ -51,16 +51,16 @@ export class AuthComponent implements OnInit {
     if (this.registrationForm.valid && this.registrationForm.dirty) {
       this.authService.register(this.registrationForm.value).subscribe({
         next: (response: MessageResponse) => {
-          this.reponseMessage = response.message;
-          this.snackbarService.openSnackBar(this.reponseMessage, "");
+          this.responseMessage = response.message;
+          this.snackbarService.openSnackBar(this.responseMessage, "");
         },
         error: (error: ErrorResponse) => {
          if (error.error.error.message) {
-            this.reponseMessage = error.error.error.message;
+            this.responseMessage = error.error.error.message;
           } else {
-            this.reponseMessage = "Unexpected error occurred";
+            this.responseMessage = "Unexpected error occurred";
           }
-          this.snackbarService.openSnackBar(this.reponseMessage, "error");
+          this.snackbarService.openSnackBar(this.responseMessage, "error");
         }
       });
     }
@@ -76,11 +76,11 @@ export class AuthComponent implements OnInit {
         },
         error: (error: ErrorResponse) => {
           if (error.error.error.message) {
-             this.reponseMessage = error.error.error.message;
+             this.responseMessage = error.error.error.message;
           } else {
-            this.reponseMessage = "Unexpected error occurred";
+            this.responseMessage = "Unexpected error occurred";
           }
-          this.snackbarService.openSnackBar(this.reponseMessage, "error");
+          this.snackbarService.openSnackBar(this.responseMessage, "error");
          }
       });
     }

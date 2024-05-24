@@ -22,7 +22,7 @@ import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 })
 export class BookCardComponent {
   @Input() book!:Book
-  reponseMessage:string = '';
+  responseMessage:string = '';
 
   constructor(
     private dialog:MatDialog, 
@@ -48,18 +48,18 @@ export class BookCardComponent {
     this.libraryComponent.books = [];
     this.libraryService.deleteBook(id).subscribe({
       next: (response: MessageResponse) => {
-        this.reponseMessage = response.message;
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.responseMessage = response.message;
+        this.snackbarService.openSnackBar(this.responseMessage, "");
         this.libraryComponent.books = [];
         this.libraryComponent.getLibraryBooks();
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }

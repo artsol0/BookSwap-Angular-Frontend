@@ -26,7 +26,7 @@ import { SuccessResponse } from '../../models/reponses/SuccessResponse';
   styleUrl: './update-book-form.component.scss'
 })
 export class UpdateBookFormComponent implements OnInit {
-  reponseMessage:string = '';
+  responseMessage:string = '';
   fileName = '';
   file!: File;
 
@@ -73,11 +73,11 @@ export class UpdateBookFormComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
 
@@ -88,11 +88,11 @@ export class UpdateBookFormComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
 
@@ -103,11 +103,11 @@ export class UpdateBookFormComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
 
@@ -118,11 +118,11 @@ export class UpdateBookFormComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }
@@ -173,17 +173,17 @@ export class UpdateBookFormComponent implements OnInit {
       next: (response: MessageResponse) => {
         this.dialogRef.close;
         this.onUpdateBook.emit();
-        this.reponseMessage = response.message;
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.responseMessage = response.message;
+        this.snackbarService.openSnackBar(this.responseMessage, "");
       },
       error: (error: ErrorResponse) => {
         this.dialogRef.close;
         if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }
@@ -201,17 +201,17 @@ export class UpdateBookFormComponent implements OnInit {
       next: (response: MessageResponse) => {
         this.dialogRef.close;
         this.onUpdateBook.emit();
-        this.reponseMessage = response.message;
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.responseMessage = response.message;
+        this.snackbarService.openSnackBar(this.responseMessage, "");
       },
       error: (error: ErrorResponse) => {
         this.dialogRef.close;
         if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }

@@ -24,8 +24,7 @@ import { Book } from '../../models/book/book';
 export class WishlistComponent implements OnInit {
   
   books:Book[] = [];
-  reponseMessage = '';
-  errorMessage = '';
+  responseMessage = '';
 
   constructor(
     private authService:AuthServiceService, 
@@ -50,11 +49,11 @@ export class WishlistComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.errorMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.errorMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.errorMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }
@@ -75,17 +74,17 @@ export class WishlistComponent implements OnInit {
   removeBook(bookId:number) {
     this.wishlistService.removeBookFromWishlist(bookId).subscribe({
       next: (response: MessageResponse) => {
-        this.reponseMessage = response.message;
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.responseMessage = response.message;
+        this.snackbarService.openSnackBar(this.responseMessage, "");
         this.getWithlistBooks();
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }

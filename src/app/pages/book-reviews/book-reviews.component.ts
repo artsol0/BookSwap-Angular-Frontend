@@ -30,7 +30,7 @@ export class BookReviewsComponent implements OnInit {
   page:number = 0;
   totalReviews = 0;
   totalPages = 0;
-  reponseMessage:string = '';
+  responseMessage:string = '';
   currentUserId!:number;
 
   reviewExist:boolean = true;
@@ -54,11 +54,11 @@ export class BookReviewsComponent implements OnInit {
         },
         error: (error: ErrorResponse) => {
          if (error.error.error.message) {
-            this.reponseMessage = error.error.error.message;
+            this.responseMessage = error.error.error.message;
           } else {
-            this.reponseMessage = "Unexpected error occurred";
+            this.responseMessage = "Unexpected error occurred";
           }
-          this.snackbarService.openSnackBar(this.reponseMessage, "error");
+          this.snackbarService.openSnackBar(this.responseMessage, "error");
         }
       });
     }
@@ -74,11 +74,11 @@ export class BookReviewsComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   } 
@@ -90,11 +90,11 @@ export class BookReviewsComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }
@@ -135,19 +135,19 @@ export class BookReviewsComponent implements OnInit {
   deleteReview() {
     this.reviewService.deleteReview(Number(this.route.snapshot.paramMap.get('id')), Number(this.currentUserId)).subscribe({
       next: (response: MessageResponse) => {
-        this.reponseMessage = response.message;
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.responseMessage = response.message;
+        this.snackbarService.openSnackBar(this.responseMessage, "");
         this.reviews = [];
         this.getReviewsData(Number(this.route.snapshot.paramMap.get('id')));
         this.reviewExist = false;
       },
       error: (error: ErrorResponse) => {
        if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }

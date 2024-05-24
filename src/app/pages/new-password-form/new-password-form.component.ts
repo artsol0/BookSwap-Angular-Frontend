@@ -20,7 +20,7 @@ import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 export class NewPasswordFormComponent implements OnInit {
 
   token:string = '';
-  reponseMessage:string = '';
+  responseMessage:string = '';
   isTokenExpired!:boolean;
   isPasswordChanged:boolean = false;
 
@@ -52,11 +52,11 @@ export class NewPasswordFormComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
         if (error.error.error.message) {
-           this.reponseMessage = error.error.error.message;
+           this.responseMessage = error.error.error.message;
          } else {
-           this.reponseMessage = "Unexpected error occurred";
+           this.responseMessage = "Unexpected error occurred";
          }
-         this.snackbarService.openSnackBar(this.reponseMessage, "error");
+         this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     })
   }

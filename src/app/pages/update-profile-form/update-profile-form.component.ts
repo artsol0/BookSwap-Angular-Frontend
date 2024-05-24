@@ -23,7 +23,7 @@ import { SuccessResponse } from '../../models/reponses/SuccessResponse';
   styleUrl: './update-profile-form.component.scss'
 })
 export class UpdateProfileFormComponent implements OnInit {
-  reponseMessage:string = '';
+  responseMessage:string = '';
   fileName = '';
   file!: File;
 
@@ -63,11 +63,11 @@ export class UpdateProfileFormComponent implements OnInit {
       error: (error: ErrorResponse) => {
         this.dialogRef.close;
         if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }
@@ -80,11 +80,11 @@ export class UpdateProfileFormComponent implements OnInit {
       error: (error: ErrorResponse) => {
         this.dialogRef.close;
         if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }
@@ -99,17 +99,17 @@ export class UpdateProfileFormComponent implements OnInit {
         next: (response: MessageResponse) => {
           this.dialogRef.close;
           this.onUpdateProfile.emit();
-          this.reponseMessage = response.message;
-          this.snackbarService.openSnackBar(this.reponseMessage, "");
+          this.responseMessage = response.message;
+          this.snackbarService.openSnackBar(this.responseMessage, "");
         },
         error: (error: ErrorResponse) => {
           this.dialogRef.close;
           if (error.error.error.message) {
-            this.reponseMessage = error.error.error.message;
+            this.responseMessage = error.error.error.message;
           } else {
-            this.reponseMessage = "Unexpected error occurred";
+            this.responseMessage = "Unexpected error occurred";
           }
-          this.snackbarService.openSnackBar(this.reponseMessage, "error");
+          this.snackbarService.openSnackBar(this.responseMessage, "error");
         }
       });
     }
@@ -122,17 +122,17 @@ export class UpdateProfileFormComponent implements OnInit {
       next: (response: MessageResponse) => {
         this.dialogRef.close;
         this.onUpdateProfile.emit();
-        this.reponseMessage = response.message;
-        this.snackbarService.openSnackBar(this.reponseMessage, "");
+        this.responseMessage = response.message;
+        this.snackbarService.openSnackBar(this.responseMessage, "");
       },
       error: (error: ErrorResponse) => {
         this.dialogRef.close;
         if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }

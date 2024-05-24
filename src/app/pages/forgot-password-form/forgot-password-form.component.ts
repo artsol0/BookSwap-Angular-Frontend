@@ -19,7 +19,7 @@ import { ErrorResponse } from '../../models/reponses/ErrorResponse';
   styleUrl: './forgot-password-form.component.scss'
 })
 export class ForgotPasswordFormComponent {
-  reponseMessage:string = '';
+  responseMessage:string = '';
 
   constructor(public authService:AuthServiceService, public snackbarService:SnackbarService, private dialog: MatDialog) {
   }
@@ -32,16 +32,16 @@ export class ForgotPasswordFormComponent {
     if (this.forgotPasswordForm.valid && this.forgotPasswordForm.dirty) {
       this.authService.forgotPassword(this.forgotPasswordForm.value.email!).subscribe({
         next: (response: MessageResponse) => {
-          this.reponseMessage = response.message;
-          this.snackbarService.openSnackBar(this.reponseMessage, "");
+          this.responseMessage = response.message;
+          this.snackbarService.openSnackBar(this.responseMessage, "");
         },
         error: (error: ErrorResponse) => {
          if (error.error.error.message) {
-            this.reponseMessage = error.error.error.message;
+            this.responseMessage = error.error.error.message;
           } else {
-            this.reponseMessage = "Unexpected error occurred";
+            this.responseMessage = "Unexpected error occurred";
           }
-          this.snackbarService.openSnackBar(this.reponseMessage, "error");
+          this.snackbarService.openSnackBar(this.responseMessage, "error");
         }
       });
     }

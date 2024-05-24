@@ -26,7 +26,7 @@ import { MessageResponse } from '../../models/reponses/MessageResponse';
 export class BookOverviewComponent implements OnInit {
 
   book!:Book;
-  reponseMessage:string = '';
+  responseMessage:string = '';
   userIsAuth:boolean = false;
 
   isUserBookOwner:boolean = false;
@@ -61,11 +61,11 @@ export class BookOverviewComponent implements OnInit {
           this.router.navigate(['/**'])
         } else {
           if (error.error.error.message) {
-            this.reponseMessage= error.error.error.message;
+            this.responseMessage= error.error.error.message;
           } else {
-            this.reponseMessage = "Unexpected error occurred";
+            this.responseMessage = "Unexpected error occurred";
           }
-          this.snackbarService.openSnackBar(this.reponseMessage, "error");
+          this.snackbarService.openSnackBar(this.responseMessage, "error");
         }
        }
     });
@@ -80,11 +80,11 @@ export class BookOverviewComponent implements OnInit {
       },
       error: (error: ErrorResponse) => {
         if (error.error.error.message) {
-           this.reponseMessage = error.error.error.message;
+           this.responseMessage = error.error.error.message;
          } else {
-           this.reponseMessage = "Unexpected error occurred";
+           this.responseMessage = "Unexpected error occurred";
          }
-         this.snackbarService.openSnackBar(this.reponseMessage, "error");
+         this.snackbarService.openSnackBar(this.responseMessage, "error");
        }
     })
   }
@@ -94,33 +94,33 @@ export class BookOverviewComponent implements OnInit {
       if (!this.isBookInWishlist) {
         this.wishlistService.addBookToWishlist(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
           next: (response: MessageResponse) => {
-            this.reponseMessage = response.message;
+            this.responseMessage = response.message;
             this.isBookInWishlist = true;
-            this.snackbarService.openSnackBar(this.reponseMessage, "");
+            this.snackbarService.openSnackBar(this.responseMessage, "");
           },
           error: (error: ErrorResponse) => {
            if (error.error.error.message) {
-              this.reponseMessage = error.error.error.message;
+              this.responseMessage = error.error.error.message;
             } else {
-              this.reponseMessage = "Unexpected error occurred";
+              this.responseMessage = "Unexpected error occurred";
             }
-            this.snackbarService.openSnackBar(this.reponseMessage, "error");
+            this.snackbarService.openSnackBar(this.responseMessage, "error");
           }
         });
       } else {
         this.wishlistService.removeBookFromWishlist(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
           next: (response: MessageResponse) => {
-            this.reponseMessage = response.message;
+            this.responseMessage = response.message;
             this.isBookInWishlist = false;
-            this.snackbarService.openSnackBar(this.reponseMessage, "");
+            this.snackbarService.openSnackBar(this.responseMessage, "");
           },
           error: (error: ErrorResponse) => {
            if (error.error.error.message) {
-              this.reponseMessage = error.error.error.message;
+              this.responseMessage = error.error.error.message;
             } else {
-              this.reponseMessage = "Unexpected error occurred";
+              this.responseMessage = "Unexpected error occurred";
             }
-            this.snackbarService.openSnackBar(this.reponseMessage, "error");
+            this.snackbarService.openSnackBar(this.responseMessage, "error");
           }
         });
       }
@@ -133,17 +133,17 @@ export class BookOverviewComponent implements OnInit {
     if (this.userIsAuth) {
       this.exchangeService.createNewExchange(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
         next: (response: MessageResponse) => {
-          this.reponseMessage = response.message;
+          this.responseMessage = response.message;
           this.isBookInExchange = true;
-          this.snackbarService.openSnackBar(this.reponseMessage, "");
+          this.snackbarService.openSnackBar(this.responseMessage, "");
         },
         error: (error: ErrorResponse) => {
          if (error.error.error.message) {
-            this.reponseMessage = error.error.error.message;
+            this.responseMessage = error.error.error.message;
           } else {
-            this.reponseMessage = "Unexpected error occurred";
+            this.responseMessage = "Unexpected error occurred";
           }
-          this.snackbarService.openSnackBar(this.reponseMessage, "error");
+          this.snackbarService.openSnackBar(this.responseMessage, "error");
         }
       })
     } else {
