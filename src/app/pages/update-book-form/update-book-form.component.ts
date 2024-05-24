@@ -12,6 +12,11 @@ import { BookAttributesService } from '../../services/attributes/book-attributes
 import { LibraryService } from '../../services/library/library.service';
 import { MessageResponse } from '../../models/reponses/MessageResponse';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { Genre } from '../../models/attributes/genre';
+import { Language } from '../../models/attributes/language';
+import { Quality } from '../../models/attributes/quality';
+import { Status } from '../../models/attributes/status';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 
 @Component({
   selector: 'app-update-book-form',
@@ -30,10 +35,10 @@ export class UpdateBookFormComponent implements OnInit {
   updateBookDataForm:any = FormGroup;
   updatePhotoForm:any = FormGroup;
 
-  genres: { id: number, genre: string }[] = [];
-  languages: { id: number, language: string }[] = [];
-  qualities: { id: number, quality: string }[] = [];
-  statuses: { id: number, status: string }[] = [];
+  genres:Genre[] = [];
+  languages:Language[] = [];
+  qualities:Quality[] = [];
+  statuses:Status[] = [];
 
   selectedGenres:number[] = [];
 
@@ -62,13 +67,13 @@ export class UpdateBookFormComponent implements OnInit {
     this.updateBookDataForm.patchValue(this.dialogData.data);
 
     this.attributesService.getGenres().subscribe({
-      next: data => {
-        this.genres = data.data;
+      next: (response: SuccessResponse<Genre[]>) => {
+        this.genres = response.data;
         this.setGenresValue();
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -77,13 +82,13 @@ export class UpdateBookFormComponent implements OnInit {
     });
 
     this.attributesService.getLanguages().subscribe({
-      next: data => {
-        this.languages = data.data;
+      next: (response: SuccessResponse<Language[]>) => {
+        this.languages = response.data;
         this.setLanguageValue();
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -92,13 +97,13 @@ export class UpdateBookFormComponent implements OnInit {
     });
 
     this.attributesService.getQualities().subscribe({
-      next: data => {
-        this.qualities = data.data;
+      next: (response: SuccessResponse<Quality[]>) => {
+        this.qualities = response.data;
         this.setQualityValue();
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -107,13 +112,13 @@ export class UpdateBookFormComponent implements OnInit {
     });
 
     this.attributesService.getStatuses().subscribe({
-      next: data => {
-        this.statuses = data.data;
+      next: (response: SuccessResponse<Status[]>) => {
+        this.statuses = response.data;
         this.setStatusValue();
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }

@@ -12,7 +12,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { MessageResponse } from '../../models/reponses/MessageResponse';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
-import { Book } from '../../models/book';
+import { Book } from '../../models/book/book';
 
 @Component({
   selector: 'app-wishlist',

@@ -11,8 +11,12 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { BookAttributesService } from '../../services/attributes/book-attributes.service';
 import { LibraryService } from '../../services/library/library.service';
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
-import { Book } from '../../models/book';
+import { Book } from '../../models/book/book';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { Genre } from '../../models/attributes/genre';
+import { Language } from '../../models/attributes/language';
+import { Quality } from '../../models/attributes/quality';
+import { Status } from '../../models/attributes/status';
 
 @Component({
   selector: 'app-add-book-form',
@@ -22,16 +26,16 @@ import { ErrorResponse } from '../../models/reponses/ErrorResponse';
   styleUrl: './add-book-form.component.scss'
 })
 export class AddBookFormComponent implements OnInit {
-  reponseMessage:string = '';
+  responseMessage:string = '';
   fileName = '';
   file!: File;
 
   onAddBook = new EventEmitter();
 
-  genres: { id: number, genre: string }[] = [];
-  languages: { id: number, language: string }[] = [];
-  qualities: { id: number, quality: string }[] = [];
-  statuses: { id: number, status: string }[] = [];
+  genres:Genre[] = [];
+  languages:Language[] = [];
+  qualities:Quality[] = [];
+  statuses:Status[] = [];
 
   selectedGenres:number[] = [];
 
@@ -44,58 +48,58 @@ export class AddBookFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.attributesService.getGenres().subscribe({
-      next: data => {
-        this.genres = data.data;
+      next: (response: SuccessResponse<Genre[]>) => {
+        this.genres = response.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
 
     this.attributesService.getLanguages().subscribe({
-      next: data => {
-        this.languages = data.data;
+      next: (response: SuccessResponse<Language[]>) => {
+        this.languages = response.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
 
     this.attributesService.getQualities().subscribe({
-      next: data => {
-        this.qualities = data.data;
+      next: (response: SuccessResponse<Quality[]>) => {
+        this.qualities = response.data;
       },
-      error: (error: any) => {
+      error: (error: ErrorResponse) => {
        if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
 
     this.attributesService.getStatuses().subscribe({
-      next: data => {
-        this.statuses = data.data;
+      next: (response: SuccessResponse<Status[]>) => {
+        this.statuses = response.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }
@@ -141,11 +145,11 @@ export class AddBookFormComponent implements OnInit {
       error: (error: ErrorResponse) => {
         this.dialogRef.close;
         if (error.error.error.message) {
-          this.reponseMessage = error.error.error.message;
+          this.responseMessage = error.error.error.message;
         } else {
-          this.reponseMessage = "Unexpected error occurred";
+          this.responseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.reponseMessage, "error");
+        this.snackbarService.openSnackBar(this.responseMessage, "error");
       }
     });
   }

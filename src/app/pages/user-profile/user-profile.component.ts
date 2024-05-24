@@ -22,10 +22,9 @@ import { ErrorResponse } from '../../models/reponses/ErrorResponse';
   styleUrl: './user-profile.component.scss'
 })
 export class UserProfileComponent implements OnInit {
-  user:any = null;
-  reponseMessage:any;
-  errorMessage = '';
-  currentUserId:any;
+  user!:User;
+  reponseMessage:string = '';
+  currentUserId!:number;
   isSameUser:boolean = true;
 
   constructor(
@@ -52,15 +51,15 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserData(id:number) {
-    this.user = this.userService.getUserDataById(id).subscribe({
-      next: data => {
-        this.user = data.data;
+    this.userService.getUserDataById(id).subscribe({
+      next: (response: SuccessResponse<User>) => {
+        this.user = response.data;
       },
-      error: (error: any) => {
-        if (error.error?.error.code === 404) {
+      error: (error: ErrorResponse) => {
+        if (error.error.error.code === 404) {
           this.router.navigate(['/**'])
         } else {
-            if (error.error?.error.message) {
+            if (error.error.error.message) {
               this.reponseMessage = error.error?.error.message;
             } else {
               this.reponseMessage = "Unexpected error occurred";
@@ -72,7 +71,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   getCurrentUserData() {
-    this.user = this.authService.getUserProfile().subscribe({
+    this.authService.getUserProfile().subscribe({
       next: (response: SuccessResponse<User>) => {
         this.user = response.data;
       },
@@ -89,12 +88,12 @@ export class UserProfileComponent implements OnInit {
 
   checkIfCurrentUser() {
     this.userService.getCurrentUserId().subscribe({
-      next: data => {
-        this.currentUserId = data.data;
+      next: (response: SuccessResponse<number>) => {
+        this.currentUserId = response.data;
         this.isSameUser = this.user.id === this.currentUserId;
       },
-      error: (error: any) => {
-        if (error.error?.error.message) {
+      error: (error: ErrorResponse) => {
+        if (error.error.error.message) {
            this.reponseMessage = error.error?.error.message;
          } else {
            this.reponseMessage = "Unexpected error occurred";
@@ -104,7 +103,7 @@ export class UserProfileComponent implements OnInit {
     })
   }
 
-  handleOpenUpdateProfileForm(values:any) {
+  handleOpenUpdateProfileForm(values:User) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       data: values

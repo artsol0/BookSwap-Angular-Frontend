@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
-import { Book } from '../../models/book';
+import { Book } from '../../models/book/book';
 import { Page } from '../../models/pageable/page';
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 import { MessageResponse } from '../../models/reponses/MessageResponse';

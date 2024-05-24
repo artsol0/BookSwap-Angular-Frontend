@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { Book } from '../../models/book';
+import { Book } from '../../models/book/book';
 import { Page } from '../../models/pageable/page';
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 import { Note } from '../../models/note';
-import { BookAdditionalInfo } from '../../models/bookAddtionalInfo';
+import { BookAdditionalInfo } from '../../models/book/bookAddtionalInfo';
 
 @Injectable({
   providedIn: 'root'

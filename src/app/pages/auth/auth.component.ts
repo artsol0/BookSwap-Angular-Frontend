@@ -24,8 +24,7 @@ import { MessageResponse } from '../../models/reponses/MessageResponse';
 export class AuthComponent implements OnInit {
   isRegister = true;
   hidePassword = true;
-  reponseMessage:any;
-  errorMessage = '';
+  reponseMessage:string = '';
 
   constructor(private authService:AuthServiceService, private snackbarService:SnackbarService, private dialog: MatDialog, private router: Router) {
   }

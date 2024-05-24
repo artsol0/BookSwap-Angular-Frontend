@@ -9,7 +9,7 @@ import { LibraryService } from '../../services/library/library.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddBookFormComponent } from '../add-book-form/add-book-form.component';
-import { Book } from '../../models/book';
+import { Book } from '../../models/book/book';
 import { Page } from '../../models/pageable/page';
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';

@@ -9,7 +9,7 @@ import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { LibraryComponent } from '../library/library.component';
 import { Router, RouterModule } from '@angular/router';
 import { UpdateBookFormComponent } from '../update-book-form/update-book-form.component';
-import { Book } from '../../models/book';
+import { Book } from '../../models/book/book';
 import { MessageResponse } from '../../models/reponses/MessageResponse';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
@@ -31,7 +31,7 @@ export class BookCardComponent {
     private libraryComponent: LibraryComponent,
     private router:Router) {}
 
-  handleDeleteBook(book:any) {
+  handleDeleteBook(book:Book) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       action: 'delete',
@@ -44,7 +44,7 @@ export class BookCardComponent {
     });
   }
 
-  deleteBook(id:any) {
+  deleteBook(id:number) {
     this.libraryComponent.books = [];
     this.libraryService.deleteBook(id).subscribe({
       next: (response: MessageResponse) => {
@@ -64,7 +64,7 @@ export class BookCardComponent {
     });
   }
 
-  handleUpdateBook(values:any) {
+  handleUpdateBook(values:Book) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       data: values

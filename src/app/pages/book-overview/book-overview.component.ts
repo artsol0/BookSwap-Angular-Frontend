@@ -10,10 +10,10 @@ import { ExchangeService } from '../../services/exchange/exchange.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { BookReviewsComponent } from '../book-reviews/book-reviews.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Book } from '../../models/book';
+import { Book } from '../../models/book/book';
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
-import { BookAdditionalInfo } from '../../models/bookAddtionalInfo';
+import { BookAdditionalInfo } from '../../models/book/bookAddtionalInfo';
 import { MessageResponse } from '../../models/reponses/MessageResponse';
 
 @Component({

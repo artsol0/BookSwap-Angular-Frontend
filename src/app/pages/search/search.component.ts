@@ -14,10 +14,14 @@ import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { BookService } from '../../services/book/book.service';
 import { BookAttributesService } from '../../services/attributes/book-attributes.service';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Book } from '../../models/book';
+import { Book } from '../../models/book/book';
 import { Page } from '../../models/pageable/page';
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { Genre } from '../../models/attributes/genre';
+import { Language } from '../../models/attributes/language';
+import { Quality } from '../../models/attributes/quality';
+import { Status } from '../../models/attributes/status';
 
 @Component({
   selector: 'app-search',
@@ -40,10 +44,10 @@ export class SearchComponent implements OnInit {
   mobileQuery: MediaQueryList;
   _mobileQueryListener: () => void;
 
-  genres: { id: number, genre: string }[] = [];
-  languages: { id: number, language: string }[] = [];
-  qualities: { id: number, quality: string }[] = [];
-  statuses: { id: number, status: string }[] = [];
+  genres:Genre[] = [];
+  languages:Language[] = [];
+  qualities:Quality[] = [];
+  statuses:Status[] = [];
   selectedGenres:number[] = [];
 
   isFiltered:boolean = false;
@@ -67,12 +71,12 @@ export class SearchComponent implements OnInit {
     this.getAllBooks(this.page,'');
 
     this.attributesService.getGenres().subscribe({
-      next: data => {
-        this.genres = data.data;
+      next: (response: SuccessResponse<Genre[]>) => {
+        this.genres = response.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -81,12 +85,12 @@ export class SearchComponent implements OnInit {
     });
 
     this.attributesService.getLanguages().subscribe({
-      next: data => {
-        this.languages = data.data;
+      next: (response: SuccessResponse<Language[]>) => {
+        this.languages = response.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -95,12 +99,12 @@ export class SearchComponent implements OnInit {
     });
 
     this.attributesService.getQualities().subscribe({
-      next: data => {
-        this.qualities = data.data;
+      next: (response: SuccessResponse<Quality[]>) => {
+        this.qualities = response.data;
       },
-      error: (error: any) => {
+      error: (error: ErrorResponse) => {
        if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -109,12 +113,12 @@ export class SearchComponent implements OnInit {
     });
 
     this.attributesService.getStatuses().subscribe({
-      next: data => {
-        this.statuses = data.data;
+      next: (response: SuccessResponse<Status[]>) => {
+        this.statuses = response.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }

@@ -10,6 +10,11 @@ import { UserService } from '../../services/user/user.service';
 import { AddReviewFormComponent } from '../add-review-form/add-review-form.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { Review } from '../../models/review';
+import { Page } from '../../models/pageable/page';
+import { MessageResponse } from '../../models/reponses/MessageResponse';
 
 
 @Component({
@@ -21,13 +26,12 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 })
 export class BookReviewsComponent implements OnInit {
 
-  reviews:any = [];
+  reviews:Review[] = [];
   page:number = 0;
   totalReviews = 0;
   totalPages = 0;
-  errorMessage = '';
-  reponseMessage:any;
-  currentUserId = '';
+  reponseMessage:string = '';
+  currentUserId!:number;
 
   reviewExist:boolean = true;
 
@@ -44,17 +48,17 @@ export class BookReviewsComponent implements OnInit {
     const bookId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.authService.isAuthenticated()) {
       this.userService.getCurrentUserId().subscribe({
-        next: data => {
-          this.currentUserId = data.data;
+        next: (response: SuccessResponse<number>) => {
+          this.currentUserId = response.data;
           this.reviewIsExist();
         },
-        error: (error: any) => {
-         if (error.error?.error.message) {
-            this.errorMessage = error.error?.error.message;
+        error: (error: ErrorResponse) => {
+         if (error.error.error.message) {
+            this.reponseMessage = error.error.error.message;
           } else {
-            this.errorMessage = "Unexpected error occurred";
+            this.reponseMessage = "Unexpected error occurred";
           }
-          this.snackbarService.openSnackBar(this.errorMessage, "error");
+          this.snackbarService.openSnackBar(this.reponseMessage, "error");
         }
       });
     }
@@ -63,34 +67,34 @@ export class BookReviewsComponent implements OnInit {
 
   getReviewsData(bookId:number) {
     this.reviewService.getBookReviews(bookId, this.page).subscribe({
-      next: data => {
-        this.reviews = [...this.reviews, ...data.data.content];
-        this.totalReviews = data.data.totalElements;
-        this.totalPages = data.data.totalPages - 1;
+      next: (response: SuccessResponse<Page<Review>>) => {
+        this.reviews = [...this.reviews, ...response.data.content];
+        this.totalReviews = response.data.totalElements;
+        this.totalPages = response.data.totalPages - 1;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
-          this.errorMessage = "Unexpected error occurred";
+          this.reponseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.errorMessage, "error");
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
     });
   } 
 
   reviewIsExist() {
-    this.reviewService.getReviewExistence(Number(this.route.snapshot.paramMap.get('id')), Number(this.currentUserId)).subscribe({
-      next: data => {
-        this.reviewExist = data.data;
+    this.reviewService.getReviewExistence(Number(this.route.snapshot.paramMap.get('id')), this.currentUserId).subscribe({
+      next: (response: SuccessResponse<boolean>) => {
+        this.reviewExist = response.data;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
-          this.errorMessage = "Unexpected error occurred";
+          this.reponseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.errorMessage, "error");
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
     });
   }
@@ -110,7 +114,7 @@ export class BookReviewsComponent implements OnInit {
       dialogRef.close();
     });
     const sub = dialogRef.componentInstance.onAddReview.subscribe((response)=> {
-      this.reviews.push(response.data);
+      this.reviews.push(response);
       this.reviewExist = true;
     });
   }
@@ -130,26 +134,26 @@ export class BookReviewsComponent implements OnInit {
 
   deleteReview() {
     this.reviewService.deleteReview(Number(this.route.snapshot.paramMap.get('id')), Number(this.currentUserId)).subscribe({
-      next: (response: any) => {
-        this.reponseMessage = response?.message;
+      next: (response: MessageResponse) => {
+        this.reponseMessage = response.message;
         this.snackbarService.openSnackBar(this.reponseMessage, "");
         this.reviews = [];
         this.getReviewsData(Number(this.route.snapshot.paramMap.get('id')));
         this.reviewExist = false;
       },
-      error: (error: any) => {
-       if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+       if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
-          this.errorMessage = "Unexpected error occurred";
+          this.reponseMessage = "Unexpected error occurred";
         }
-        this.snackbarService.openSnackBar(this.errorMessage, "error");
+        this.snackbarService.openSnackBar(this.reponseMessage, "error");
       }
     });
   }
 
-  trackById(index: number, review: any): number {
-    return review.id;
+  trackById(index: number, review: Review): number {
+    return review.userId;
   }
 
   numSequence(n: number): Array<number> { 

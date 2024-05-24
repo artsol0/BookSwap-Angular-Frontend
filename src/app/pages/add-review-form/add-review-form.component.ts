@@ -7,6 +7,9 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ReviewService } from '../../services/review/review.service';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { Review } from '../../models/review';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-add-review-form',
@@ -17,7 +20,6 @@ import { ReviewService } from '../../services/review/review.service';
 })
 export class AddReviewFormComponent implements OnInit {
 
-  reponseMessage:any;
   errorMessage = '';
   details:any = {};
 
@@ -39,15 +41,15 @@ export class AddReviewFormComponent implements OnInit {
 
   handleAddNewReview() {
     this.reviewService.addReview(Number(this.details.bookId), this.addReviewForm.value).subscribe({
-      next: (response: any) => {
+      next: (response: SuccessResponse<Review>) => {
         this.dialogRef.close;
-        this.onAddReview.emit(response);
+        this.onAddReview.emit(response.data);
         this.snackbarService.openSnackBar("Review was added successfully", "");
       },
-      error: (error: any) => {
+      error: (error: ErrorResponse) => {
         this.dialogRef.close;
-       if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+       if (error.error.error.message) {
+          this.errorMessage = error.error.error.message;
         } else {
           this.errorMessage = "Unexpected error occurred";
         }

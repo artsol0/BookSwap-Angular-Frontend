@@ -9,6 +9,11 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../services/user/user.service';
+import { MessageResponse } from '../../models/reponses/MessageResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { Country } from '../../models/location/country';
+import { City } from '../../models/location/city';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 
 @Component({
   selector: 'app-update-profile-form',
@@ -18,13 +23,12 @@ import { UserService } from '../../services/user/user.service';
   styleUrl: './update-profile-form.component.scss'
 })
 export class UpdateProfileFormComponent implements OnInit {
-  reponseMessage:any;
-  errorMessage = '';
+  reponseMessage:string = '';
   fileName = '';
   file!: File;
 
-  countries: { id: number, name: string , iso2: string } [] = [];
-  cities: { id: number, name: string }[] = [];
+  countries:Country[] = [];
+  cities:City[] = [];
 
   onUpdateProfile = new EventEmitter();
 
@@ -53,13 +57,13 @@ export class UpdateProfileFormComponent implements OnInit {
 
   getCountriesData() {
     this.userService.getAllCountries().subscribe({
-      next: (response: any) => {
+      next: (response: SuccessResponse<Country[]>) => {
         this.countries = response.data;
       },
-      error: (error: any) => {
+      error: (error: ErrorResponse) => {
         this.dialogRef.close;
-        if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+        if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -70,13 +74,13 @@ export class UpdateProfileFormComponent implements OnInit {
 
   getCitiesData() {
     this.userService.getCitiesByCountry(this.updateLocationForm.value.country.iso2).subscribe({
-      next: (response: any) => {
+      next: (response: SuccessResponse<City[]>) => {
         this.cities = response.data;
       },
-      error: (error: any) => {
+      error: (error: ErrorResponse) => {
         this.dialogRef.close;
-        if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+        if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
@@ -92,16 +96,16 @@ export class UpdateProfileFormComponent implements OnInit {
         city: this.updateLocationForm.value.city
       })
       this.userService.updateLocation(location).subscribe({
-        next: (response: any) => {
+        next: (response: MessageResponse) => {
           this.dialogRef.close;
           this.onUpdateProfile.emit();
-          this.reponseMessage = response?.message;
+          this.reponseMessage = response.message;
           this.snackbarService.openSnackBar(this.reponseMessage, "");
         },
-        error: (error: any) => {
+        error: (error: ErrorResponse) => {
           this.dialogRef.close;
-          if (error.error?.error.message) {
-            this.reponseMessage = error.error?.error.message;
+          if (error.error.error.message) {
+            this.reponseMessage = error.error.error.message;
           } else {
             this.reponseMessage = "Unexpected error occurred";
           }
@@ -115,16 +119,16 @@ export class UpdateProfileFormComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('photo', this.file);
     this.userService.updatePhoto(formData).subscribe({
-      next: (response: any) => {
+      next: (response: MessageResponse) => {
         this.dialogRef.close;
         this.onUpdateProfile.emit();
-        this.reponseMessage = response?.message;
+        this.reponseMessage = response.message;
         this.snackbarService.openSnackBar(this.reponseMessage, "");
       },
-      error: (error: any) => {
+      error: (error: ErrorResponse) => {
         this.dialogRef.close;
-        if (error.error?.error.message) {
-          this.reponseMessage = error.error?.error.message;
+        if (error.error.error.message) {
+          this.reponseMessage = error.error.error.message;
         } else {
           this.reponseMessage = "Unexpected error occurred";
         }
