@@ -31,7 +31,7 @@ and JWT tokens for secure authentication. The [backend](https://github.com/artso
 
 ## Some UI Previews
 
-### Book serach page
+### Book search page
 
 ![books_search](https://github.com/artsol0/BookSwap-Angular-Frontend/assets/108554037/6fb4ba80-84f0-4582-a19b-a9f0de1fce34)
 
