@@ -1,27 +1,70 @@
-# Bookswap
+# Book*Swap*
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
+## Content
 
-## Development server
+* [Overview](#overview)
+* [Features](#features)
+* [Some UI Previews](#some-ui-previews)
+* [Technologies Used](#technologies-used)
+  * [Frontend](#frontend)
+  * [Backend](#backend)
+* [License](#license)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Overview
 
-## Code scaffolding
+Book*Swap* is a full-stack application that provides users with the ability to comfortably exchange books. 
+The application offers functionalities such as user registration, book management, writing revievs, exchange approval, one-on-one chatting, profile and wishlist management. It is designed using REST API principles for efficient communication between the frontend and backend, 
+and JWT tokens for secure authentication. The [backend](https://github.com/artsol0/BookSwap-SpringBoot-Backend) is developed using Spring Boot 3, while the [frontend](https://github.com/artsol0/BookSwap-Angular-Frontend) is developed using Angular 17.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Features
 
-## Build
+* User Registration and Authentication: Users can register accounts and log in to them.
+* Email Confirmation: Accounts are activated after confirming email via a received link.
+* Password Recovery: Users can reset their password if forgotten via a link received in their email.
+* Book Searching: Users can search for books by various attributes (genre, language, quality, status) and keywords.
+* Book Management: Users can create, update, and delete their own books.
+* Writing Revievs: Users can add their reviews to books.
+* Wishlist Management: Users can add books to their wishlist and remove them.
+* One-on-One Chatting: Users can chat with each other directly.
+* Profile Management: Users can change their avatar, password, or location.
+* Exchange Approval: Users can send exchange offers to each other and confirm or delete them.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Some UI Previews
 
-## Running unit tests
+### Book serach page
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![books_search](https://github.com/artsol0/BookSwap-Angular-Frontend/assets/108554037/6fb4ba80-84f0-4582-a19b-a9f0de1fce34)
 
-## Running end-to-end tests
+### Book profile page
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+![book_page](https://github.com/artsol0/BookSwap-Angular-Frontend/assets/108554037/cc616598-a16b-4338-a0c8-9efc42952bfe)
 
-## Further help
+### User exchanges page
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![exchanges-page](https://github.com/artsol0/BookSwap-Angular-Frontend/assets/108554037/1884ffdb-88e1-4a74-a13d-26da415612bb)
+
+## Technologies Used
+
+### Frontend
+* Angular 17
+* Tailwind CSS
+* SockJS
+* Angular Materil Library
+
+### Backend
+* Spring Boot 3
+* Spring Security 6 with JWT Token Authentication
+* Spring Web
+* Spring Data JPA
+* Spring WebSocket
+* Spring Validation
+* MySQL Driver
+* H2 Database
+* Thymeleaf
+* Java Mail Sender
+* Mockito with JUnit 5
+* Lombok
+
+## License
+
+This project is licensed under MIT License. See the [LICENSE](https://github.com/artsol0/BookSwap-Angular-Frontend/blob/main/LICENSE) file for details.
