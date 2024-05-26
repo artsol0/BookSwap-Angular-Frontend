@@ -14,6 +14,8 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 import { User } from '../../models/user';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { Chat } from '../../models/chat/chat';
+import { Message } from '../../models/chat/message';
 
 @Component({
   selector: 'app-chat',
@@ -27,10 +29,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
 
   user:any = null;
-  errorMessage = '';
+  errorMessage:string = '';
   messageForm:any = FormGroup;
-  chats:any = [];
-  messages:any = [];
+  chats:Chat[] = [];
+  messages:Message[] = [];
 
   chatName = '';
   receiverId!:number;
@@ -76,26 +78,17 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   getChatMessages() {
     this.chatService.reciveChatMessages().subscribe({
-      next: data => {
-        this.messages = data;
+      next: (response: SuccessResponse<Message[]>) => {
+        this.messages = response.data;
         this.scrollToBottom();
       }
     });
   }
 
   handleSendMessage() {
-    this.chatService.sendMessage(this.user.id, this.receiverId, this.messageForm.value.message);
-    const message = {
-      senderId: this.user.id,
-      nickname: this.user.nickname,
-      photo: this.user.photo,
-      content: this.messageForm.value.message,
-      timestamp: new Date()
-    }
-    this.messages.push(message);
+    this.chatService.sendMessage(this.receiverId, this.messageForm.value.message);
     this.messageForm.reset();
     this.messageForm.controls.message.setErrors(null);
-    this.scrollToBottom();
   }
 
   getCurrentUserDataAndConnect() {
@@ -117,12 +110,12 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   getAllUserChats() {
     this.chatService.getUserChats().subscribe({
-      next: data => {
-        this.chats = data;
+      next: (response: SuccessResponse<Chat[]>) => {
+        this.chats = response.data;
       },
-      error: (error: any) => {
-      if (error.error?.error.message) {
-          this.errorMessage = error.error?.error.message;
+      error: (error: ErrorResponse) => {
+      if (error.error.error.message) {
+          this.errorMessage = error.error.error.message;
         } else {
           this.errorMessage = "Unexpected error occurred";
         }

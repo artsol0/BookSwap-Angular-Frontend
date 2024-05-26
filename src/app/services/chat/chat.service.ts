@@ -1,9 +1,12 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import * as Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import { ChatComponent } from '../../pages/chat/chat.component';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { Chat } from '../../models/chat/chat';
+import { Message } from '../../models/chat/message';
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +32,11 @@ export class ChatService {
   }
 
   connect(nickname:string) {
-    const headers = new HttpHeaders({
-      Authorization:`Bearer ${localStorage.getItem("token")}`
-    });
     this.nickname = nickname;
     this.socket = new SockJS(this.baseUrl + "/ws");
     this.stompClient = Stomp.over(this.socket);
     const that = this;
-    this.stompClient.connect({headers}, function(frame) {
+    this.stompClient.connect({Authorization: `Bearer ${localStorage.getItem("token")}`}, function(frame) {
       that.stompClient?.subscribe(`/user/${that.nickname}/queue/messages`, (message) => {
         console.log("message recived")
         if (message.body) {
@@ -53,47 +53,40 @@ export class ChatService {
   }
 
   disconnect() {
-    const headers = new HttpHeaders({
-      Authorization:`Bearer ${localStorage.getItem("token")}`
-    });
-    this.stompClient?.disconnect(this.onDisconnect, {headers});
+    this.stompClient?.disconnect(this.onDisconnect, {Authorization: `Bearer ${localStorage.getItem("token")}`});
   }
 
   onDisconnect() {
     console.log("disconnected");
   }
 
-  getUserChats():Observable<any> {
+  getUserChats():Observable<SuccessResponse<Chat[]>> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
     });
-    return this.http.get<any>(this.baseUrl + "/get/chats", {headers});
+    return this.http.get<SuccessResponse<Chat[]>>(this.baseUrl + "/get/chats", {headers});
   }
 
-  reciveChatMessages():Observable<any> {
+  reciveChatMessages():Observable<SuccessResponse<Message[]>> {
     const headers = new HttpHeaders({
       Authorization:`Bearer ${localStorage.getItem("token")}`
     });
-    return this.http.get<any>(this.baseUrl + "/messages/" + this.chatId, {headers});
+    return this.http.get<SuccessResponse<Message[]>>(this.baseUrl + "/messages/" + this.chatId, {headers});
   }
 
-  sendMessage(senderId:number, receiverId:number, content:string) {
-    const headers = new HttpHeaders({
-      Authorization:`Bearer ${localStorage.getItem("token")}`
-    });
+  sendMessage(receiverId:number, content:string) {
     this.stompClient?.send(
       '/app/chat',
-      {headers},
+      { Authorization: `Bearer ${localStorage.getItem("token")}` },
       JSON.stringify({
         content: content,
         timestamp: new Date(),
-        sender_id: senderId,
         receiver_id: receiverId
       })
     );
   }
 
-  sendGreetingMessage(senderId:number, receiverId:number, content:string) {
+  sendGreetingMessage(receiverId:number, content:string):Observable<SuccessResponse<string>> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization:`Bearer ${localStorage.getItem("token")}`
@@ -101,10 +94,9 @@ export class ChatService {
     const message = JSON.stringify({
       content: content,
       timestamp: new Date(),
-      sender_id: senderId,
       receiver_id: receiverId
     });
-    return this.http.post(this.baseUrl + "/add/message", message, {headers});
+    return this.http.post<SuccessResponse<string>>(this.baseUrl + "/add/message", message, {headers});
   }
 
 }

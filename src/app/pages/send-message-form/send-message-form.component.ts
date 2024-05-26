@@ -7,6 +7,8 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ChatService } from '../../services/chat/chat.service';
+import { SuccessResponse } from '../../models/reponses/SuccessResponse';
+import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 
 @Component({
   selector: 'app-send-message-form',
@@ -18,6 +20,7 @@ import { ChatService } from '../../services/chat/chat.service';
 export class SendMessageFormComponent implements OnInit {
 
   messageForm:any = FormGroup;
+  errorMessage:string = '';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData:any, 
@@ -34,13 +37,18 @@ export class SendMessageFormComponent implements OnInit {
   }
 
   hadnleMessageSending() {
-    this.chatService.sendGreetingMessage(this.dialogData.userId, this.dialogData.receiverId, this.messageForm.value.message).subscribe({
-      next: (response: any) => {
+    this.chatService.sendGreetingMessage(this.dialogData.receiverId, this.messageForm.value.message).subscribe({
+      next: (response: SuccessResponse<string>) => {
         this.snackbarService.openSnackBar(response.data, "");
       },
-      error: (error: any) => {
-        this.snackbarService.openSnackBar("Unexpected error occurred", "error");
-      }
+      error: (error: ErrorResponse) => {
+        if (error.error.error.message) {
+            this.errorMessage = error.error.error.message;
+          } else {
+            this.errorMessage = "Unexpected error occurred";
+          }
+          this.snackbarService.openSnackBar(this.errorMessage, "error");
+        }
     });
   }
 }
