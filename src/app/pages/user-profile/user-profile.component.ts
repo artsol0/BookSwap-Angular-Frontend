@@ -13,6 +13,7 @@ import { SendMessageFormComponent } from '../send-message-form/send-message-form
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 import { User } from '../../models/user';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user-profile',
@@ -33,7 +34,8 @@ export class UserProfileComponent implements OnInit {
     private snackbarService:SnackbarService, 
     private dialog: MatDialog, 
     private router: Router, 
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private titleService: Title) {
   }
 
   ngOnInit(): void {
@@ -54,6 +56,7 @@ export class UserProfileComponent implements OnInit {
     this.userService.getUserDataById(id).subscribe({
       next: (response: SuccessResponse<User>) => {
         this.user = response.data;
+        this.titleService.setTitle("BookSwap - " + this.user.nickname + " Profile");
       },
       error: (error: ErrorResponse) => {
         if (error.error.error.code === 404) {
@@ -74,6 +77,7 @@ export class UserProfileComponent implements OnInit {
     this.authService.getUserProfile().subscribe({
       next: (response: SuccessResponse<User>) => {
         this.user = response.data;
+        this.titleService.setTitle("BookSwap - " + this.user.nickname + " Profile");
       },
       error: (error: ErrorResponse) => {
         if (error.error.error.message) {

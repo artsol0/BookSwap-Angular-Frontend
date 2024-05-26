@@ -3,7 +3,7 @@
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
     </mat-card-header>
-    <img class="max-h-[400px] object-cover" [src]="'data:image/JPEG;base64,' + book.photo" alt="Photo of a Shiba Inu">
+    <img class="max-h-[400px] object-cover" [src]="'data:image/JPEG;base64,' + book.photo" alt="Photo of the book {{book.title}}">
     <mat-card-content class="mt-2">
       <p>
         {{book.description}}

@@ -24,7 +24,7 @@ export class NavbarComponent {
   }
 
   goToSearchPage() {
-    this.router.navigate(['/search'])
+    this.router.navigate(['/search']);
   }
 
   goToLibraryPage() {
@@ -44,7 +44,7 @@ export class NavbarComponent {
   }
 
   goToProfilePage() {
-    this.router.navigate(['/profile'])
+    this.router.navigate(['/profile']);
   }
 
   isLoggedIn():boolean {

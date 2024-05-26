@@ -70,7 +70,7 @@
           <div class="book-cards">
               <div class="book-card__wrapper bg-white border border-gray-200 rounded-lg shadow" *ngFor="let book of books; trackBy: trackById">
                   <a target="_blank" [routerLink]="['/book',book.id]">
-                      <img class="rounded-t-lg w-full" [src]="'data:image/JPEG;base64,' + book.photo" alt="" />
+                      <img class="rounded-t-lg w-full" [src]="'data:image/JPEG;base64,' + book.photo" alt="Photo of the book {{book.title}}" />
                   </a>
                   <div class="p-5">
                       <a [routerLink]="['/book',book.id]">

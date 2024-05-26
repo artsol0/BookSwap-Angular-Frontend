@@ -26,7 +26,7 @@ export class ExchangesComponent implements OnInit {
 
   initiateExchanges:Exchange[] = [];
   recipientExchanges:Exchange[] = [];
-  displayedColumns: string[] = ['id', 'initiator', 'recipient', 'book', 'confirmed', 'action'];
+  displayedColumns:string[] = ['id', 'initiator', 'recipient', 'book', 'confirmed', 'action'];
   responseMessage:string = '';
 
   constructor (

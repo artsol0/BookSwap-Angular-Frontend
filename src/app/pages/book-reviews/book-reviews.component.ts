@@ -28,8 +28,8 @@ export class BookReviewsComponent implements OnInit {
 
   reviews:Review[] = [];
   page:number = 0;
-  totalReviews = 0;
-  totalPages = 0;
+  totalReviews:number = 0;
+  totalPages:number  = 0;
   responseMessage:string = '';
   currentUserId!:number;
 

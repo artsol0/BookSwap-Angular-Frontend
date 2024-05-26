@@ -16,7 +16,7 @@
                 <div *ngFor="let message of messages; trackBy: trackById">
 
                     <div *ngIf="message.senderId != user.id" class="flex justify-start gap-2.5 p-2">
-                        <img class="w-8 h-8 rounded-full" [src]="'data:image/JPEG;base64,' + message.photo">
+                        <img class="w-8 h-8 rounded-full" [src]="'data:image/JPEG;base64,' + message.photo" alt="Profile image of {{message.nickname}}">
                         <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-200 rounded-tr-xl rounded-bl-xl rounded-br-xl">
                            <div class="flex items-center space-x-2 rtl:space-x-reverse">
                               <span class="text-sm font-semibold text-gray-900">{{message.nickname}}</span>
@@ -34,7 +34,7 @@
                            </div>
                            <p class="text-sm font-normal py-2.5 text-gray-50">{{message.content}}</p>
                         </div>
-                        <img class="w-8 h-8 rounded-full" [src]="'data:image/JPEG;base64,' + message.photo">
+                        <img class="w-8 h-8 rounded-full" [src]="'data:image/JPEG;base64,' + message.photo" alt="Profile image of {{message.nickname}}">
                     </div>
 
                 </div>

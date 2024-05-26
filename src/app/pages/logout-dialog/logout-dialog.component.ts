@@ -17,7 +17,6 @@ export class LogoutDialogComponent {
   }
 
   handleLogout() {
-    console.log("logout");
     this.authService.logout();
     this.router.navigate(["/auth"]);
   }

@@ -20,7 +20,7 @@ export class BookLocationHistoryComponent implements OnInit {
 
   notes:Note[] = [];
   displayedColumns: string[] = ['country', 'city', 'date'];
-  errorMessage = '';
+  errorMessage:string = '';
 
   constructor(private route: ActivatedRoute, private bookService:BookService, private snackbarService: SnackbarService) {}
 

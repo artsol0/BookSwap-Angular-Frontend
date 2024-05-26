@@ -18,17 +18,17 @@ export const routes: Routes = [
         redirectTo: 'home', 
         pathMatch: 'full'
     },
-    { path: 'home', component: HomeComponent },
-    { path: 'auth', component: AuthComponent },
-    { path: 'search', component: SearchComponent },
-    { path: 'library', component: LibraryComponent },
-    { path: 'wishlist', component: WishlistComponent },
-    { path: 'exchanges', component: ExchangesComponent },
-    { path: 'chatting', component: ChatComponent },
+    { path: 'home', title: 'BookSwap - Home Page', component: HomeComponent },
+    { path: 'auth', title: 'BookSwap - Login And Registration', component: AuthComponent },
+    { path: 'search', title: 'BookSwap - Find Your Book', component: SearchComponent },
+    { path: 'library', title: 'BookSwap - Library', component: LibraryComponent },
+    { path: 'wishlist', title: 'BookSwap - Wishlist', component: WishlistComponent },
+    { path: 'exchanges', title: 'BookSwap - Exchanges', component: ExchangesComponent },
+    { path: 'chatting', title: 'BookSwap - Chats', component: ChatComponent },
     { path: 'profile', component: UserProfileComponent },
     { path: 'user/:id/profile', component: UserProfileComponent },
     { path: 'book/:id', component: BookOverviewComponent },
-    { path: 'book/:id/location', component: BookLocationHistoryComponent },
-    { path: 'new-password', component: NewPasswordFormComponent },
-    { path: '**', component: PageNotFoundComponent }
+    { path: 'book/:id/location', title: "BookSwap - Book Location History", component: BookLocationHistoryComponent },
+    { path: 'new-password', title: "BookSwap - Reset Password", component: NewPasswordFormComponent },
+    { path: '**', title: "BookSwap - Page Not Found", component: PageNotFoundComponent }
 ];

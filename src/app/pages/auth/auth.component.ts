@@ -11,7 +11,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ForgotPasswordFormComponent } from '../forgot-password-form/forgot-password-form.component';
 import { RouterModule, Router } from '@angular/router';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
-import { ErrorDescription } from '../../models/reponses/ErrorDescription';
 import { MessageResponse } from '../../models/reponses/MessageResponse';
 
 @Component({

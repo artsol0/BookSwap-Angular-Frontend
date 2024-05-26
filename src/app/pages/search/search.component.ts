@@ -34,10 +34,10 @@ export class SearchComponent implements OnInit {
 
   books: Book[] = [];
   page:number = 0;
-  pageEvent: PageEvent = new PageEvent;
-  totalBooks = 0;
-  totalPages = 0;
-  pageSize = 0;
+  pageEvent:PageEvent = new PageEvent;
+  totalBooks:number = 0;
+  totalPages:number = 0;
+  pageSize:number = 0;
 
   responseMessage:string = '';
 

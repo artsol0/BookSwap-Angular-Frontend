@@ -9,12 +9,12 @@ import { WishlistService } from '../../services/wishlist/wishlist.service';
 import { ExchangeService } from '../../services/exchange/exchange.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { BookReviewsComponent } from '../book-reviews/book-reviews.component';
-import { MatDialog } from '@angular/material/dialog';
 import { Book } from '../../models/book/book';
 import { SuccessResponse } from '../../models/reponses/SuccessResponse';
 import { ErrorResponse } from '../../models/reponses/ErrorResponse';
 import { BookAdditionalInfo } from '../../models/book/bookAddtionalInfo';
 import { MessageResponse } from '../../models/reponses/MessageResponse';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-book-overview',
@@ -40,7 +40,8 @@ export class BookOverviewComponent implements OnInit {
      private authService:AuthServiceService, 
      private wishlistService:WishlistService,
      private exchangeService:ExchangeService,
-     private snackbarService: SnackbarService) {}
+     private snackbarService: SnackbarService,
+     private titleService: Title) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -55,6 +56,7 @@ export class BookOverviewComponent implements OnInit {
     this.bookService.getBook(bookId).subscribe({
       next: (response: SuccessResponse<Book>) => {
         this.book = response.data;
+        this.titleService.setTitle("BookSwap - " + this.book.title);
       },
       error: (error: ErrorResponse) => {
         if (error.error.error.code === 404) {
